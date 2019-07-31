@@ -338,12 +338,12 @@ Cuts:
 # CEDAR
     - &CutBeamPIDLikelihood
       ShortName: BeamPID
-      LongName: "Beam was a Kaon"
+      LongName: "Beam was a Pion"
       Abbreviation: BeamPID
       Cut:
           Name: Equality
           Type: "=="
-          Value: 0
+          Value: 1
           Variable: BeamCEDARPid
 
 # Pi K Separation
@@ -360,7 +360,7 @@ Cuts:
 # Final state ID veto
     - &CutParticlePIDVetoBKG 
       ShortName: PPIDVetoBKG
-      LongName: "No PID conflicting Kpipi"
+      LongName: "No PID conflicting PiKK"
       Abbreviation: PPIDVetoBKG
       Cut:
           Name: Group
@@ -373,7 +373,7 @@ Cuts:
                       - Cut:
                           Name: Equality
                           Type: "=="
-                          Value: 0
+                          Value: 1
                           Variable: Pid3
                       - Cut:
                           Name: Equality
