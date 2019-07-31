@@ -498,10 +498,10 @@ Cuts:
           Variable: *tPrime
 
 # 3 body mass cut
-    - &KPiPiMassCut
-      ShortName: KPiPi_Mass
-      LongName: "KPiPi Mass in ]1.0, 3.0["
-      Abbreviation: KPiPiMass
+    - &PiKKMassCut
+      ShortName: PiKK_Mass
+      LongName: "PiKK Mass in ]1.0, 3.0["
+      Abbreviation: PiKKMass
       Cut:
           Name: Range
           Type: Exclusive
@@ -529,7 +529,7 @@ CutTrains:
         - *ExclusivityCut
         - *CentralProductionCut
         - *TPrimeCut
-        - *KPiPiMassCut
+        - *PiKKMassCut
       Pertinent: No
 
 #############################################################################################
@@ -577,7 +577,7 @@ Plots:
 
 
 
-    - Name: "3 Pion mass"
+    - Name: "3 body mass"
       Variable: *XMass
       LowerBound: 0
       UpperBound: 7
@@ -608,10 +608,17 @@ Plots:
       NBins: [ 1000, 1000 ]
 
 
-
     - Name: T Prime
       Variable: *tPrime
       LowerBound: 0.0
       UpperBound: 2.0
       NBins:  1000
+
+    - Name: KaonxF
+      Variable: *KaonxF
+      LowerBound: 0.0
+      UpperBound: 1.0
+      NBins:  1000
+
+
 
