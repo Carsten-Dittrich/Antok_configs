@@ -105,6 +105,83 @@ CalculatedQuantities:
           - *PrimaryVertexX
           - *PrimaryVertexY
 
+##########################
+# For CEDAR cut
+    - Name: [BeamCEDARPid, BeamCEDAR1LogLikeDiff, BeamCEDAR2LogLikeDiff, BeamCEDARLogLikeDiff]
+      Function:
+          Name: calcCEDARPID
+          LikelihoodKaonCedar1: *BeamCEDAR1LikelihoodKaon
+          LikelihoodPionCedar1: *BeamCEDAR1LikelihoodPion
+          LikelihoodKaonCedar2: *BeamCEDAR2LikelihoodKaon
+          LikelihoodPionCedar2: *BeamCEDAR2LikelihoodPion
+          ThresholdKaonDeltaLogLike: *CEDARThresholdKaon
+          ThresholdPionDeltaLogLike: *CEDARThresholdPion
+
+# For PId
+
+    - Name: RAtRICH
+      Function:
+          Name: sum2
+          Summands:
+              - *ParticleXAtRICH
+              - *ParticleYAtRICH
+      Indices: *allParticles
+
+
+    - Name: &Mom Mom
+      Function:
+          Name: getVector3
+          X: MomX
+          Y: MomY
+          Z: MomZ
+      Indices: *allParticles
+
+
+    - Name: [PidPPion, PidPKaon, PidPProton, PidPElectron, PidPMuon, PidPBackground, Pid]
+      Function:
+          Name: calcRICHPID
+          PidLRichPion: PidLPion
+          PidLRichKaon: PidLKaon
+          PidLRichProton: PidLProton
+          PidLRichElectron: -1.0 #PidLElectron
+          PidLRichMuon: -1.0 #PidLMuon
+          PidLRichBackground: PidLBackground
+          Mom: Mom
+          Radius: RAtRICH
+          Angle: ParticleThetaAtRICH
+          PRatioCut: *RICHPidRatioCut
+          MomPionMin: *RICHMomPionMin
+          MomPionMax: *RICHMomPionMax
+          MomKaonMin: *RICHMomKaonMin
+          MomKaonMax: *RICHMomKaonMax
+          MomProtonMin: *RICHMomProtonMin
+          MomProtonMax: *RICHMomProtonMax
+          MomElectronMin: *RICHMomElectronMin
+          MomElectronMax: *RICHMomElectronMax
+          MomMuonMin: *RICHMomMuonMin
+          MomMuonMax: *RICHMomMuonMax
+          RadiusMin: *RICHRadiusMin
+          RadiusMax: *RICHRadiusMax
+          AngleMin: *RICHAngleMin
+          AngleMax: *RICHAngleMax
+      Indices: *allParticles
+
+
+    - Name: [KaonLV, PiNegLV, i_kp_pk, KaonPid, PionPid, KaonPidMct, PionPidMct]
+      Function:
+          Name: determineKaonPionLV
+          MomCandidate1: Mom1
+          PidCandidate1: Pid1
+          PidCandidate1Mct: 0
+          MomCandidate2: Mom2
+          PidCandidate2: Pid2
+          PidCandidate2Mct: 0
+          MassChargedKaon: *ChargedKaonMass
+          MassChargedPion: *ChargedPionMass
+          Method: 0 # 0: K- or pi-, 1: K-, 2: pi-
+
+
+#################
 
 # For Beam energy cut
     - Name: &LorentzVecName LorentzVec_
@@ -182,81 +259,7 @@ CalculatedQuantities:
           Name: mass
           Vector: *XLorentzVec
 
-##########################
-# For CEDAR cut
-    - Name: [BeamCEDARPid, BeamCEDAR1LogLikeDiff, BeamCEDAR2LogLikeDiff, BeamCEDARLogLikeDiff]
-      Function:
-          Name: calcCEDARPID
-          LikelihoodKaonCedar1: *BeamCEDAR1LikelihoodKaon
-          LikelihoodPionCedar1: *BeamCEDAR1LikelihoodPion
-          LikelihoodKaonCedar2: *BeamCEDAR2LikelihoodKaon
-          LikelihoodPionCedar2: *BeamCEDAR2LikelihoodPion
-          ThresholdKaonDeltaLogLike: *CEDARThresholdKaon
-          ThresholdPionDeltaLogLike: *CEDARThresholdPion
-
-# For PId
-
-    - Name: RAtRICH
-      Function:
-          Name: sum2
-          Summands:
-              - *ParticleXAtRICH
-              - *ParticleYAtRICH
-      Indices: *allParticles
-
-
-    - Name: &Mom Mom
-      Function:
-          Name: getVector3
-          X: MomX
-          Y: MomY
-          Z: MomZ
-      Indices: *allParticles
-
-
-    - Name: [PidPPion, PidPKaon, PidPProton, PidPElectron, PidPMuon, PidPBackground, Pid]
-      Function:
-          Name: calcRICHPID
-          PidLRichPion: PidLPion
-          PidLRichKaon: PidLKaon
-          PidLRichProton: PidLProton
-          PidLRichElectron: -1.0 #PidLElectron
-          PidLRichMuon: -1.0 #PidLMuon
-          PidLRichBackground: PidLBackground
-          Mom: Mom
-          Radius: RAtRICH
-          Angle: ParticleThetaAtRICH
-          PRatioCut: *RICHPidRatioCut
-          MomPionMin: *RICHMomPionMin
-          MomPionMax: *RICHMomPionMax
-          MomKaonMin: *RICHMomKaonMin
-          MomKaonMax: *RICHMomKaonMax
-          MomProtonMin: *RICHMomProtonMin
-          MomProtonMax: *RICHMomProtonMax
-          MomElectronMin: *RICHMomElectronMin
-          MomElectronMax: *RICHMomElectronMax
-          MomMuonMin: *RICHMomMuonMin
-          MomMuonMax: *RICHMomMuonMax
-          RadiusMin: *RICHRadiusMin
-          RadiusMax: *RICHRadiusMax
-          AngleMin: *RICHAngleMin
-          AngleMax: *RICHAngleMax
-      Indices: *allParticles
-
-
-    - Name: [KaonLV, PiNegLV, i_kp_pk, KaonPid, PionPid, KaonPidMct, PionPidMct]
-      Function:
-          Name: determineKaonPionLV
-          MomCandidate1: Mom1
-          PidCandidate1: Pid1
-          PidCandidate1Mct: 0
-          MomCandidate2: Mom2
-          PidCandidate2: Pid2
-          PidCandidate2Mct: 0
-          MassChargedKaon: *ChargedKaonMass
-          MassChargedPion: *ChargedPionMass
-          Method: 0 # 0: K- or pi-, 1: K-, 2: pi-
-
+# For Feynman x cut
 
     - Name: [KaonRapidity, &KaonxF KaonxF]
       Function:
@@ -264,8 +267,12 @@ CalculatedQuantities:
           LV: KaonLV
           LVBeam: BeamLV
 
-#################
+# For momentum plot
 
+    - Name: &AbsMom3 AbsMom3
+      Function:
+          Name: abs
+          Arg: Mom3
 
 
 ##############################################################
@@ -345,30 +352,18 @@ Cuts:
           Type: "=="
           Value: 1
           Variable: BeamCEDARPid
-
-# Pi K Separation
-    - &CutParticleNegativePID
-      ShortName: PnegPID
-      LongName: "Clear K- pi- decision"
-      Abbreviation: PnegPID
-      Cut:
-          Name: Range
-          Type: Inclusive
-          LowerBound: 0
-          Variable: i_kp_pk
-
-# Final state ID veto
-    - &CutParticlePIDVetoBKG 
-      ShortName: PPIDVetoBKG
-      LongName: "No PID conflicting PiKK"
-      Abbreviation: PPIDVetoBKG
+# Hard PID cut
+    - &HardParticlePIDCut 
+      ShortName: HardPIDCut
+      LongName: "Hard Particle PID Cut"
+      Abbreviation: HPID
       Cut:
           Name: Group
-          Type: And
+          Type: Or
           Cuts:
               - Cut:
                   Name: Group
-                  Type: Or
+                  Type: And
                   Cuts:
                       - Cut:
                           Name: Equality
@@ -378,61 +373,22 @@ Cuts:
                       - Cut:
                           Name: Equality
                           Type: "=="
-                          Value: -1
-                          Variable: Pid3
-                      - Cut:
-                          Name: Equality
-                          Type: "=="
-                          Value: 5
-                          Variable: Pid3
+                          Value: 1
+                          Variable: Pid1
               - Cut:
                   Name: Group
-                  Type: Or
+                  Type: And
                   Cuts:
                       - Cut:
                           Name: Equality
                           Type: "=="
-                          Value: 0
-                          Variable: Pid2
+                          Value: 1
+                          Variable: Pid3
                       - Cut:
                           Name: Equality
                           Type: "=="
                           Value: 1
                           Variable: Pid2
-                      - Cut:
-                          Name: Equality
-                          Type: "=="
-                          Value: -1
-                          Variable: Pid2
-                      - Cut:
-                          Name: Equality
-                          Type: "=="
-                          Value: 5
-                          Variable: Pid2
-              - Cut:
-                  Name: Group
-                  Type: Or
-                  Cuts:
-                      - Cut:
-                          Name: Equality
-                          Type: "=="
-                          Value: 0
-                          Variable: Pid1
-                      - Cut:
-                          Name: Equality
-                          Type: "=="
-                          Value: 1
-                          Variable: Pid1
-                      - Cut:
-                          Name: Equality
-                          Type: "=="
-                          Value: -1
-                          Variable: Pid1
-                      - Cut:
-                          Name: Equality
-                          Type: "=="
-                          Value: 5
-                          Variable: Pid1
 
 
 ####################
@@ -522,8 +478,7 @@ CutTrains:
         - *VertexZCut
         - *VertexRCut
         - *CutBeamPIDLikelihood
-        - *CutParticleNegativePID
-        - *CutParticlePIDVetoBKG
+        - *HardParticlePIDCut
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
@@ -619,6 +574,34 @@ Plots:
       LowerBound: 0.0
       UpperBound: 1.0
       NBins:  1000
+
+# to identify Pid numbering
+    - Name: Pid1
+      Variable: Pid1
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: Pid2
+      Variable: Pid2
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: Pid3
+      Variable: Pid3
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+# momentum plot
+
+    - Name: AbsMom3
+      Variable: AbsMom3
+      LowerBound: 0.0
+      UpperBound: 200.0
+      NBins:  1000
+
 
 
 
