@@ -166,8 +166,34 @@ CalculatedQuantities:
           AngleMax: *RICHAngleMax
       Indices: *allParticles
 
+# 3 momenta and lorentzvector of the positive Kaon
 
-    - Name: [KaonLV, PiNegLV, i_kp_pk, KaonPid, PionPid, KaonPidMct, PionPidMct]
+    - Name: &KaonPosV3 KaonPosV3
+      Function:
+          Name: getVector3
+          X: MomX3
+          Y: MomY3
+          Z: MomZ3
+
+    - Name: &KaonPosMomAbs KaonPosMomAbs
+      Function:
+          Name: abs
+          Arg: KaonPosV3
+
+
+    - Name: &KaonPosLV KaonPosLV
+      Function:
+          Name: getLorentzVec
+          X: MomX3
+          Y: MomY3
+          Z: MomZ3
+          M: *ChargedKaonMass
+
+
+# 3 momenta and lorentzvector of the negative particles
+
+
+    - Name: [&KaonNegLV KaonNegLV, &PionLV PionLV, i_kp_pk, KaonPid, PionPid, KaonPidMct, PionPidMct]
       Function:
           Name: determineKaonPionLV
           MomCandidate1: Mom1
@@ -181,31 +207,69 @@ CalculatedQuantities:
           Method: 0 # 0: K- or pi-, 1: K-, 2: pi-
 
 
+    - Name: [ KaonNegMomX, KaonNegMomY, KaonNegMomZ, KaonNegMomPhi, KaonNegMomTheta ]
+      Function:
+          Name: getLorentzVectorAttributes
+          Vector: KaonNegLV
+
+    - Name: [ PionMomX, PionMomY, PionMomZ, PionMomPhi, PionMomTheta ]
+      Function:
+          Name: getLorentzVectorAttributes
+          Vector: PionLV
+
+    - Name: PionV3
+      Function:
+          Name: getVector3
+          X: PionMomX
+          Y: PionMomY
+          Z: PionMomZ
+
+    - Name: KaonNegV3
+      Function:
+          Name: getVector3
+          X: KaonNegMomX
+          Y: KaonNegMomY
+          Z: KaonNegMomZ
+
+    - Name: &PionMomAbs PionMomAbs
+      Function:
+          Name: abs
+          Arg: PionV3
+
+    - Name: &KaonNegMomAbs KaonNegMomAbs
+      Function:
+          Name: abs
+          Arg: KaonNegV3
+
+
+
 #################
 
-# For Beam energy cut
-    - Name: &LorentzVecName LorentzVec_
-      Function:
-          Name: getLorentzVec
-          X: *MomX
-          Y: *MomY
-          Z: *MomZ
-          M: *ChargedPionMass
-      Indices: *allParticles
+# For 3 body Mass
 
-    - Name: &XLorentzVec XLorentzVec
+    - Name: &XStateLV XStateLV
       Function:
           Name: sum
           Summands:
-              Name: *LorentzVecName
-              Indices: *allParticles
+              - *KaonNegLV
+              - *KaonPosLV
+              - *PionLV
+
+    - Name: &XStateMass XStateMass
+      Function:
+          Name: mass
+          Vector: *XStateLV
+
+# For Beam energy cut
 
     - Name: &BeamLV BeamLV
       Function:
           Name: getBeamLorentzVector
           dX: *BeamdXdZ
           dY: *BeamdYdZ
-          XLorentzVec: *XLorentzVec
+          XLorentzVec: *XStateLV
+          BeamMass: *ChargedPionMass
+          TargetMass: *ProtonMass
 
     - Name: &BeamE BeamE
       Function:
@@ -229,7 +293,7 @@ CalculatedQuantities:
         Method: Projection
         BeamLorentzVec: *BeamLV
         RPDProtonLorentzVec: *RPDProton
-        XLorentzVec: *XLorentzVec
+        XLorentzVec: *XStateLV
 
 
     - Name: &AbsRpdPhiProjection AbsRpdPhiProjection
@@ -250,29 +314,25 @@ CalculatedQuantities:
       Function:
           Name: getTs
           BeamLorentzVec: *BeamLV
-          XLorentzVec: *XLorentzVec
+          XLorentzVec: *XStateLV
+          TargetMass: *ProtonMass
 
 
-# For 3 Mass
-    - Name: &XMass XMass
-      Function:
-          Name: mass
-          Vector: *XLorentzVec
 
 # For Feynman x cut
 
     - Name: [KaonRapidity, &KaonxF KaonxF]
       Function:
           Name: calcRapidityXF
-          LV: KaonLV
+          LV: KaonNegLV
           LVBeam: BeamLV
 
 # For momentum plot
 
-    - Name: &AbsMom3 AbsMom3
-      Function:
-          Name: abs
-          Arg: Mom3
+#    - Name: &AbsMom3 AbsMom3
+#      Function:
+#          Name: abs
+#          Arg: Mom3
 
 
 ##############################################################
@@ -463,7 +523,7 @@ Cuts:
           Type: Exclusive
           LowerBound: 1.0
           UpperBound: 3.0
-          Variable: *XMass
+          Variable: *XStateMass
 
 #############################################################################################
 # CUT TRAINS
@@ -533,7 +593,7 @@ Plots:
 
 
     - Name: "3 body mass"
-      Variable: *XMass
+      Variable: *XStateMass
       LowerBound: 0
       UpperBound: 7
       NBins: 750
@@ -594,14 +654,31 @@ Plots:
       UpperBound: 6.0
       NBins:  8
 
-# momentum plot
+# momentum plots
 
-    - Name: AbsMom3
-      Variable: AbsMom3
+    - Name: KaonPosMomAbs
+      Variable: *KaonPosMomAbs
       LowerBound: 0.0
       UpperBound: 200.0
-      NBins:  1000
+      NBins:  400
 
+    - Name: KaonNegMomAbs
+      Variable: *KaonNegMomAbs
+      LowerBound: 0.0
+      UpperBound: 200.0
+      NBins:  400
+
+    - Name: PionMomAbsPlot
+      Variable: *PionMomAbs
+      LowerBound: 0.0
+      UpperBound: 200.0
+      NBins:  400
+
+    - Name: Momentum Plane of KNeg versus PiNeg
+      Variables: [ *KaonNegMomAbs, *PionMomAbs ]
+      LowerBounds: [ 0.0, 0.0 ]
+      UpperBounds: [ 200.0, 200.0 ]
+      NBins: [ 600, 600 ]
 
 
 
