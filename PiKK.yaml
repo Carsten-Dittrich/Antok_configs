@@ -275,6 +275,13 @@ CalculatedQuantities:
           Name: mass
           Vector: *KNegPiStateLV
 
+    - Name: &KNegPiStateMassQrt KNegPiStateMassQrt
+      Function:
+          Name: mul
+          Factor1: KNegPiStateMass
+          Factor2: KNegPiStateMass
+
+
 
 # KPosPi-State 
     - Name: &KPosPiStateLV KPosPiStateLV
@@ -289,6 +296,12 @@ CalculatedQuantities:
           Name: mass
           Vector: *KPosPiStateLV
 
+    - Name: &KPosPiStateMassQrt KPosPiStateMassQrt
+      Function:
+          Name: mul
+          Factor1: KPosPiStateMass
+          Factor2: KPosPiStateMass
+
 
 # KNegKPos-State 
     - Name: &KNegKPosStateLV KNegKPosStateLV
@@ -302,6 +315,12 @@ CalculatedQuantities:
       Function:
           Name: mass
           Vector: *KNegKPosStateLV
+
+    - Name: &KNegKPosStateMassQrt KNegKPosStateMassQrt
+      Function:
+          Name: mul
+          Factor1: KNegKPosStateMass
+          Factor2: KNegKPosStateMass
 
 ###############
 
@@ -735,5 +754,34 @@ Plots:
       UpperBound: 3.0
       NBins:  300
 
+
+# Invariant mass spectra of the 3 body mass against two-body subsystem
+
+    - Name: XStateMass versus KPosPiStateMass
+      Variables: [ *XStateMass, *KPosPiStateMass ]
+      LowerBounds: [ 0.0, 0.0 ]
+      UpperBounds: [ 3.0, 3.0 ]
+      NBins: [ 300, 300 ]
+
+    - Name: XStateMass versus KNegKPosStateMass
+      Variables: [ *XStateMass, *KNegKPosStateMass ]
+      LowerBounds: [ 0.0, 0.0 ]
+      UpperBounds: [ 3.0, 3.0 ]
+      NBins: [ 300, 300 ]
+
+
+# Dalitz Plots
+
+    - Name: Dalitz KNegKPos versus KNegPi
+      Variables: [ *KNegKPosStateMassQrt, *KNegPiStateMassQrt ]
+      LowerBounds: [ 0.0, 0.0 ]
+      UpperBounds: [ 3.0, 3.0 ]
+      NBins: [ 300, 300 ]
+
+    - Name: Dalitz KNegKPos versus KPosPi
+      Variables: [ *KNegKPosStateMassQrt, *KPosPiStateMassQrt ]
+      LowerBounds: [ 0.0, 0.0 ]
+      UpperBounds: [ 3.0, 3.0 ]
+      NBins: [ 300, 300 ]
 
 
