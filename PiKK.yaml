@@ -260,6 +260,51 @@ CalculatedQuantities:
           Name: mass
           Vector: *XStateLV
 
+# states
+############
+# KNegPi-State 
+    - Name: &KNegPiStateLV KNegPiStateLV
+      Function:
+          Name: sum
+          Summands:
+              - *KaonNegLV
+              - *PionLV
+
+    - Name: &KNegPiStateMass KNegPiStateMass
+      Function:
+          Name: mass
+          Vector: *KNegPiStateLV
+
+
+# KPosPi-State 
+    - Name: &KPosPiStateLV KPosPiStateLV
+      Function:
+          Name: sum
+          Summands:
+              - *KaonPosLV
+              - *PionLV
+
+    - Name: &KPosPiStateMass KPosPiStateMass
+      Function:
+          Name: mass
+          Vector: *KPosPiStateLV
+
+
+# KNegKPos-State 
+    - Name: &KNegKPosStateLV KNegKPosStateLV
+      Function:
+          Name: sum
+          Summands:
+              - *KaonNegLV
+              - *KaonPosLV
+
+    - Name: &KNegKPosStateMass KNegKPosStateMass
+      Function:
+          Name: mass
+          Vector: *KNegKPosStateLV
+
+###############
+
 # For Beam energy cut
 
     - Name: &BeamLV BeamLV
@@ -278,7 +323,7 @@ CalculatedQuantities:
 
 # For Recoil proton momentum cut
 
-    - Name: &RPDProton RPDProton
+    - Name: &RPDProtonLV RPDProtonLV
       Function:
           Name: getLorentzVec
           Px: *RecoilMomX
@@ -292,7 +337,7 @@ CalculatedQuantities:
         Name: getRpdPhi
         Method: Projection
         BeamLorentzVec: *BeamLV
-        RPDProtonLorentzVec: *RPDProton
+        RPDProtonLorentzVec: *RPDProtonLV
         XLorentzVec: *XStateLV
 
 
@@ -318,21 +363,13 @@ CalculatedQuantities:
           TargetMass: *ProtonMass
 
 
-
 # For Feynman x cut
 
     - Name: [KaonRapidity, &KaonxF KaonxF]
       Function:
           Name: calcRapidityXF
-          LV: KaonNegLV
+          LV: PionLV
           LVBeam: BeamLV
-
-# For momentum plot
-
-#    - Name: &AbsMom3 AbsMom3
-#      Function:
-#          Name: abs
-#          Arg: Mom3
 
 
 ##############################################################
@@ -562,12 +599,13 @@ GlobalPlotOptions:
     GlobalCuts: []
     HistogramNameAppendix: "_hist"
 
+
+
 #############################################################################################
 # Plots
 #############################################################################################
 Plots:
 
-################################
 # Beam info
     - Name: PrimaryVertexZ
       Variable: *PrimaryVertexZ
@@ -582,7 +620,6 @@ Plots:
       NBins: [ 1000, 1000 ]
 
 
-
     - Name: Momentum Plane
       Variables: [ *MomX, *MomY ]
       Indices: *allParticles
@@ -591,25 +628,13 @@ Plots:
       NBins: [ 200, 200 ]
 
 
-
-    - Name: "3 body mass"
-      Variable: *XStateMass
-      LowerBound: 0
-      UpperBound: 7
-      NBins: 750
-#      CustomCuts:
-#          - CutTrain: *DebugCutTrain
-#            WithCuts: [ *KaonCut, [ *StdKin, *RPDPlanarityCut ] ]
-#            WithoutCuts: [ *StdKin ]
-
-
     - Name: Beam Energy
       Variable: *BeamE
       LowerBound: 170.0
       UpperBound: 230.0
       NBins:  480
 
-
+# Detector
     - Name: RpdPhi Projection
       Variable: *rpdDeltaPhiProjection
       LowerBound: -5.0
@@ -622,13 +647,14 @@ Plots:
       UpperBounds: [ 230, 5 ]
       NBins: [ 1000, 1000 ]
 
-
+# T Prime
     - Name: T Prime
       Variable: *tPrime
       LowerBound: 0.0
       UpperBound: 2.0
       NBins:  1000
 
+# Feyman x 
     - Name: KaonxF
       Variable: *KaonxF
       LowerBound: 0.0
@@ -679,6 +705,35 @@ Plots:
       LowerBounds: [ 0.0, 0.0 ]
       UpperBounds: [ 200.0, 200.0 ]
       NBins: [ 600, 600 ]
+
+
+# Invariant mass spectrum of the diffractivly produced K-Pi-K+ system
+    - Name: "3 body mass"
+      Variable: *XStateMass
+      LowerBound: 0
+      UpperBound: 7
+      NBins: 750
+
+
+# Invariant mass spectra of the two-body subsystem
+
+    - Name: KNegPiStateMass
+      Variable: *KNegPiStateMass
+      LowerBound: 0.0
+      UpperBound: 3.0
+      NBins:  300
+
+    - Name: KPosPiStateMass
+      Variable: *KPosPiStateMass
+      LowerBound: 0.0
+      UpperBound: 3.0
+      NBins:  300
+
+    - Name: KNegKPosStateMass
+      Variable: *KNegKPosStateMass
+      LowerBound: 0.0
+      UpperBound: 3.0
+      NBins:  300
 
 
 
