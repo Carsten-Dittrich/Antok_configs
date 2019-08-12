@@ -468,24 +468,25 @@ Cuts:
           Type: "=="
           Value: 1
           Variable: BeamCEDARPid
-# Hard PID cut
-    - &HardParticlePIDCut 
-      ShortName: HardPIDCut
-      LongName: "Hard Particle PID Cut"
-      Abbreviation: HPID
+
+# Soft PID cut
+    - &SoftParticlePIDCut 
+      ShortName: SoftPIDCut
+      LongName: "Soft Particle PID Cut"
+      Abbreviation: SPID
       Cut:
           Name: Group
           Type: Or
           Cuts:
               - Cut:
                   Name: Group
-                  Type: And
+                  Type: Or
                   Cuts:
                       - Cut:
                           Name: Equality
                           Type: "=="
                           Value: 1
-                          Variable: Pid3
+                          Variable: Pid2
                       - Cut:
                           Name: Equality
                           Type: "=="
@@ -503,9 +504,22 @@ Cuts:
                       - Cut:
                           Name: Equality
                           Type: "=="
-                          Value: 1
+                          Value: 0
                           Variable: Pid2
-
+              - Cut:
+                  Name: Group
+                  Type: And
+                  Cuts:
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 1
+                          Variable: Pid3
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 0
+                          Variable: Pid1
 
 ####################
 
@@ -594,7 +608,7 @@ CutTrains:
         - *VertexZCut
         - *VertexRCut
         - *CutBeamPIDLikelihood
-        - *HardParticlePIDCut
+        - *SoftParticlePIDCut
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
@@ -783,5 +797,6 @@ Plots:
       LowerBounds: [ 0.0, 0.0 ]
       UpperBounds: [ 3.0, 3.0 ]
       NBins: [ 300, 300 ]
+
 
 
