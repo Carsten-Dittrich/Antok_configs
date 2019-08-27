@@ -521,6 +521,7 @@ Cuts:
                           Value: 0
                           Variable: Pid1
 
+
 ####################
 
 # Genau 1 RPD Track
@@ -646,14 +647,14 @@ Plots:
       UpperBound: 160.0
       NBins:  720
 
-    - Name: Vertex Distribution
+    - Name: PrimaryVertexXY
       Variables: [ *PrimaryVertexX, *PrimaryVertexY ]
-      LowerBounds: [ -5, -5 ]
-      UpperBounds: [ 5, 5 ]
-      NBins: [ 1000, 1000 ]
+      LowerBounds: [ -4.0, -4.0 ]
+      UpperBounds: [ 4.0, 4.0 ]
+      NBins: [ 800, 800 ]
 
 
-    - Name: Momentum Plane
+    - Name: Momentum Plane XY
       Variables: [ *MomX, *MomY ]
       Indices: *allParticles
       LowerBounds: [ -10, -10 ]
@@ -663,29 +664,29 @@ Plots:
 
     - Name: Beam Energy
       Variable: *BeamE
-      LowerBound: 170.0
-      UpperBound: 230.0
+      LowerBound: 150.0
+      UpperBound: 210.0
       NBins:  480
 
 # Detector
     - Name: RpdPhi Projection
       Variable: *rpdDeltaPhiProjection
-      LowerBound: -5.0
-      UpperBound: 5.0
-      NBins:  1000
+      LowerBound: -3.0
+      UpperBound: 3.0
+      NBins:  3000
 
-    - Name: Distribution of the exclusivity variables
+    - Name: Beam energy vs RpdPhi
       Variables: [ *BeamE, *rpdDeltaPhiProjection ]
-      LowerBounds: [ 150, -5 ]
-      UpperBounds: [ 230, 5 ]
+      LowerBounds: [ 150, -2 ]
+      UpperBounds: [ 230, 2 ]
       NBins: [ 1000, 1000 ]
 
 # T Prime
     - Name: T Prime
       Variable: *tPrime
       LowerBound: 0.0
-      UpperBound: 2.0
-      NBins:  1000
+      UpperBound: 3.0
+      NBins:  3000
 
 # Feyman x 
     - Name: PionxF
@@ -719,19 +720,19 @@ Plots:
       Variable: *KaonPosMomAbs
       LowerBound: 0.0
       UpperBound: 200.0
-      NBins:  400
+      NBins:  500
 
     - Name: KaonNegMomAbs
       Variable: *KaonNegMomAbs
       LowerBound: 0.0
       UpperBound: 200.0
-      NBins:  400
+      NBins:  500
 
     - Name: PionMomAbsPlot
       Variable: *PionMomAbs
       LowerBound: 0.0
       UpperBound: 200.0
-      NBins:  400
+      NBins:  500
 
     - Name: Momentum Plane of KNeg versus PiNeg
       Variables: [ *KaonNegMomAbs, *PionMomAbs ]
@@ -739,13 +740,20 @@ Plots:
       UpperBounds: [ 200.0, 200.0 ]
       NBins: [ 600, 600 ]
 
+    - Name: Momentum Plane of KNeg versus KPos
+      Variables: [ *KaonNegMomAbs, *KaonPosMomAbs ]
+      LowerBounds: [ 0.0, 0.0 ]
+      UpperBounds: [ 200.0, 200.0 ]
+      NBins: [ 600, 600 ]
+
+
 
 # Invariant mass spectrum of the diffractivly produced K-Pi-K+ system
     - Name: "3 body mass"
       Variable: *XStateMass
       LowerBound: 0
       UpperBound: 7
-      NBins: 750
+      NBins: 700
 
 
 # Invariant mass spectra of the two-body subsystem
@@ -754,34 +762,34 @@ Plots:
       Variable: *KNegPiStateMass
       LowerBound: 0.0
       UpperBound: 3.0
-      NBins:  300
+      NBins:  600
 
     - Name: KPosPiStateMass
       Variable: *KPosPiStateMass
       LowerBound: 0.0
       UpperBound: 3.0
-      NBins:  300
+      NBins:  600
 
     - Name: KNegKPosStateMass
       Variable: *KNegKPosStateMass
       LowerBound: 0.0
       UpperBound: 3.0
-      NBins:  300
+      NBins:  600
 
 
 # Invariant mass spectra of the 3 body mass against two-body subsystem
 
     - Name: XStateMass versus KPosPiStateMass
       Variables: [ *XStateMass, *KPosPiStateMass ]
-      LowerBounds: [ 0.0, 0.0 ]
+      LowerBounds: [ 1.0, 0.5 ]
       UpperBounds: [ 3.0, 3.0 ]
-      NBins: [ 300, 300 ]
+      NBins: [ 200, 250 ]
 
     - Name: XStateMass versus KNegKPosStateMass
       Variables: [ *XStateMass, *KNegKPosStateMass ]
-      LowerBounds: [ 0.0, 0.0 ]
+      LowerBounds: [ 1.0, 0.5 ]
       UpperBounds: [ 3.0, 3.0 ]
-      NBins: [ 300, 300 ]
+      NBins: [ 200, 250 ]
 
 
 # Dalitz Plots
@@ -797,6 +805,5 @@ Plots:
       LowerBounds: [ 0.0, 0.0 ]
       UpperBounds: [ 3.0, 3.0 ]
       NBins: [ 300, 300 ]
-
 
 
