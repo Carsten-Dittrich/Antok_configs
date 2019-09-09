@@ -60,7 +60,6 @@ Constants:
     ProtonMass     : &ProtonMass 0.938272046
     PI             : &PI 3.141592653589793
     PIMinus        : &PIMinus -3.141592653589793
-#    OneHundredAndEighty: &OneHundredAndEighty 180.0
 
 # RICHParameter:
     RICHMomPionMin:   &RICHMomPionMin 3.0
@@ -93,8 +92,9 @@ Constants:
 
 
 
-
-
+#############################################################################################
+# CalculatedQuantities
+#############################################################################################
 
 CalculatedQuantities:
 ###############################
@@ -261,6 +261,7 @@ CalculatedQuantities:
           Name: mass
           Vector: *XStateLV
 
+
 # states
 ############
 # KNegPi-State 
@@ -385,30 +386,16 @@ CalculatedQuantities:
 
 # For Feynman x cut
 
-    - Name: [KaonRapidity, &PionxF PionxF]
+    - Name: [PionRapidity, &PionxF PionxF]
       Function:
           Name: calcRapidityXF
           LV: PionLV
           LVBeam: BeamLV
 
-# Grad- und Bogenmass anpassen
 
-#    - Name: &IntoGradmass IntoGradmass
-#      Function:
-#          Name: quotient
-#          Dividend: *OneHundredAndEighty
-#          Divisor: *PI
-
-#    - Name: &GradDeltaPhi GradDeltaPhi
-#      Function:
-#          Name: mul
-#          Factor1: *rpdDeltaPhiProjection
-#         Factor2: *IntoGradmass
-
-
-##############################################################
+#############################################################################################
 # CUTS
-##############################################################
+#############################################################################################
 Cuts:
 ###############################
 
@@ -485,6 +472,8 @@ Cuts:
           Variable: BeamCEDARPid
 
 # Hard PID cut
+# If set on all 3 PId -> No Events were left
+# Therefore h3+ = K+ and either h1- or h2- = K-
     - &HardParticlePIDCut 
       ShortName: HardPIDCut
       LongName: "Hard Particle PID Cut"
@@ -576,7 +565,7 @@ Cuts:
 
 ####################
 
-# Genau 1 RPD Track
+# Exactly 1 RPD Track
     - &nRPDTracksCut
       ShortName: nRPDTracks=1
       LongName: 1 RPD Track
@@ -635,8 +624,6 @@ Cuts:
           LowerBound: 0.1
           UpperBound: 1.0
           Variable: *tPrime
-#####
-#kinematics
 
 # 3 body mass cut
     - &PiKKMassCut
@@ -748,17 +735,12 @@ Plots:
       UpperBound: 3.0
       NBins:  3000
 
-#    - Name: RpdPhi Projection Grad
-#      Variable: *GradDeltaPhi
-#      LowerBound: -50.0
-#      UpperBound: 50.0
-#      NBins:  3000
 
-    - Name: Beam energy vs RpdPhi
+    - Name: RpdPhi vs Beam energy
       Variables: [ *BeamE, *rpdDeltaPhiProjection ]
       LowerBounds: [ 150, -2 ]
       UpperBounds: [ 230, 2 ]
-      NBins: [ 1000, 1000 ]
+      NBins: [ 800, 1000 ]
 
 # T Prime
     - Name: T Prime
@@ -774,7 +756,7 @@ Plots:
       UpperBound: 1.0
       NBins:  1000
 
-# to identify Pid numbering
+# Pid testing
     - Name: Pid1
       Variable: Pid1
       LowerBound: -2.0
@@ -794,7 +776,6 @@ Plots:
       NBins:  8
 
 # momentum plots
-
     - Name: KaonPosMomAbs
       Variable: *KaonPosMomAbs
       LowerBound: 0.0
@@ -813,18 +794,17 @@ Plots:
       UpperBound: 200.0
       NBins:  500
 
-    - Name: Momentum Plane of KNeg versus PiNeg
+    - Name: Momentum Plane of PiNeg versus KNeg
       Variables: [ *KaonNegMomAbs, *PionMomAbs ]
       LowerBounds: [ 0.0, 0.0 ]
       UpperBounds: [ 200.0, 200.0 ]
       NBins: [ 500, 500 ]
 
-    - Name: Momentum Plane of KNeg versus KPos
+    - Name: Momentum Plane of KPos versus KNeg
       Variables: [ *KaonNegMomAbs, *KaonPosMomAbs ]
       LowerBounds: [ 0.0, 0.0 ]
       UpperBounds: [ 200.0, 200.0 ]
       NBins: [ 500, 500 ]
-
 
 # Invariant mass spectrum of the diffractivly produced K-Pi-K+ system
     - Name: "3 body mass"
@@ -833,9 +813,7 @@ Plots:
       UpperBound: 7.0
       NBins: 1400
 
-
 # Invariant mass spectra of the two-body subsystem
-
     - Name: KNegPiStateMass
       Variable: *KNegPiStateMass
       LowerBound: 0.0
@@ -854,16 +832,14 @@ Plots:
       UpperBound: 4.0
       NBins:  800
 
-
 # Invariant mass spectra of the 3 body mass against two-body subsystem
-
-    - Name: XStateMass versus KPosPiStateMass
+    - Name: KPosPiStateMass versus XStateMass
       Variables: [ *XStateMass, *KPosPiStateMass ]
       LowerBounds: [ 1.0, 0.5 ]
       UpperBounds: [ 3.0, 3.0 ]
       NBins: [ 200, 250 ]
 
-    - Name: XStateMass versus KNegKPosStateMass
+    - Name: KNegKPosStateMass versus XStateMass
       Variables: [ *XStateMass, *KNegKPosStateMass ]
       LowerBounds: [ 1.0, 0.5 ]
       UpperBounds: [ 3.0, 3.0 ]
@@ -871,8 +847,7 @@ Plots:
 
 
 # Dalitz Plots
-
-    - Name: Dalitz KNegKPos versus KNegPi
+    - Name: Dalitz KNegPi versus KNegKPos
       Variables: [ *KNegKPosStateMassQrt, *KNegPiStateMassQrt, *XStateMass]
       LowerBounds: [ 0.0, 0.0, 1.6 ]
       UpperBounds: [ 6.0, 6.0, 3.5 ]
@@ -894,4 +869,5 @@ Plots:
 #        - CutTrain: *MainTrainSoft
 #          WithCuts: [ *CutsMainTrainSoft, *PiKKMassCut2Dot2Gev]
 #          WithoutCuts: [ ]
+
 
