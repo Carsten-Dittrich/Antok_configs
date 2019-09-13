@@ -1,0 +1,755 @@
+NumberOfParticles: 3
+AllParticles: &allParticles [1, 2, 3]
+
+TreeName: "UserEvent200/Tree"
+
+TreeBranches:
+    onePerEvent:
+
+        int:
+            - &Run Run
+            - SpillNumber
+            - &EventNumber EventNumber
+            - &TriggerMask TriggerMask
+            - &RecoilnRPDTracks RecoilnRPDTracks
+            - &IsSelected IsFilled
+            - &NPrimaryVertices NPrimaryVertices
+            - &BeamCEDAR1Majority BeamCEDAR1Majority
+            - &BeamCEDAR2Majority BeamCEDAR2Majority
+
+        double:
+              - &PrimaryVertexX PrimaryVertexX
+              - &PrimaryVertexY PrimaryVertexY
+              - &PrimaryVertexZ PrimaryVertexZ
+              - &BeamdXdZ BeamdXdZ
+              - &BeamdYdZ BeamdYdZ
+              - &BeamTrackTime BeamTrackTime
+              - &RecoilMomX RecoilMomX
+              - &RecoilMomY RecoilMomY
+              - &RecoilMomZ RecoilMomZ
+              - &RecoilE RecoilE
+              - &BeamCEDAR1LikelihoodPion BeamCEDAR1LikelihoodPion
+              - &BeamCEDAR1LikelihoodKaon BeamCEDAR1LikelihoodKaon
+              - &BeamCEDAR2LikelihoodPion BeamCEDAR2LikelihoodPion
+              - &BeamCEDAR2LikelihoodKaon BeamCEDAR2LikelihoodKaon
+
+
+    onePerParticle:
+        double:
+              - &MomX MomX
+              - &MomY MomY
+              - &MomZ MomZ
+              - &PidPion PidLPion
+              - &PidKaon PidLKaon
+              - &PidProton PidLProton
+              - &PidElectron PidLElectron
+              - &PidMuon PidLMuon
+              - &PidBackground PidLBackground
+              - &RichAngle RichAngle
+              - &ParticleXAtRICH ParticleXAtRICH
+              - &ParticleYAtRICH ParticleYAtRICH
+              - &ParticleZAtRICH ParticleZAtRICH
+              - &MomXAtRich ParticlePxAtRICH
+              - &MomYAtRich ParticlePyAtRICH
+              - &MomZAtRich ParticlePzAtRICH
+              - &ThetaAtRich ParticleThetaAtRICH
+
+Constants:
+    ChargedKaonMass: &ChargedKaonMass 0.493677
+    ChargedPionMass: &ChargedPionMass 0.13957018
+    ProtonMass     : &ProtonMass 0.938272046
+    PI             : &PI 3.141592653589793
+    PIMinus        : &PIMinus -3.141592653589793
+
+# RICHParameter:
+    RICHMomPionMin:   &RICHMomPionMin 3.0
+    RICHMomPionMax:   &RICHMomPionMax 60.0
+    RICHMomKaonMin:   &RICHMomKaonMin 10.0
+    RICHMomKaonMax:   &RICHMomKaonMax 60.0
+    RICHMomProtonMin: &RICHMomProtonMin 18.0
+    RICHMomProtonMax: &RICHMomProtonMax 100.0
+    RICHMomElectronMin: &RICHMomElectronMin 0.0
+    RICHMomElectronMax: &RICHMomElectronMax 0.0
+    RICHMomMuonMin: &RICHMomMuonMin 0.0
+    RICHMomMuonMax: &RICHMomMuonMax 0.0
+    RICHPidRatioCut:  &RICHPidRatioCut 1.15
+    RICHRadiusMin:  &RICHRadiusMin 5
+    RICHRadiusMax:  &RICHRadiusMax 10000
+    RICHAngleMin:  &RICHAngleMin 0
+    RICHAngleMax:  &RICHAngleMax 0.25
+
+    PidMCT1:  &PidMCT1 0
+    PidMCT2:  &PidMCT2 0
+
+# CEDAR Parameter
+    CEDARParameter:
+        CEDARThresholdKaon: &CEDARThresholdKaon 4.0
+        CEDARThresholdPion: &CEDARThresholdPion 0.0
+        CEDARPidKaon: &CEDARPidKaon 0
+        CEDARPidPion: &CEDARPidPion 1
+        CEDARPidProton: &CEDARPidProton 2
+        CEDARMajority: &CEDARMajority 6
+
+
+
+
+#############################################################################################
+# CalculatedQuantities
+#############################################################################################
+
+CalculatedQuantities:
+###############################
+# Primary vertex
+    - Name: &PrimaryVertexR PrimaryVertexR
+      Function: 
+        Name: sum2
+        Summands: 
+          - *PrimaryVertexX
+          - *PrimaryVertexY
+
+##########################
+# For CEDAR cut
+    - Name: [BeamCEDARPid, BeamCEDAR1LogLikeDiff, BeamCEDAR2LogLikeDiff, BeamCEDARLogLikeDiff]
+      Function:
+          Name: calcCEDARPID
+          LikelihoodKaonCedar1: *BeamCEDAR1LikelihoodKaon
+          LikelihoodPionCedar1: *BeamCEDAR1LikelihoodPion
+          LikelihoodKaonCedar2: *BeamCEDAR2LikelihoodKaon
+          LikelihoodPionCedar2: *BeamCEDAR2LikelihoodPion
+          ThresholdKaonDeltaLogLike: *CEDARThresholdKaon
+          ThresholdPionDeltaLogLike: *CEDARThresholdPion
+
+# For PId
+
+    - Name: RAtRICH
+      Function:
+          Name: sum2
+          Summands:
+              - *ParticleXAtRICH
+              - *ParticleYAtRICH
+      Indices: *allParticles
+
+
+    - Name: &Mom Mom
+      Function:
+          Name: getVector3
+          X: MomX
+          Y: MomY
+          Z: MomZ
+      Indices: *allParticles
+
+
+    - Name: [PidPPion, PidPKaon, PidPProton, PidPElectron, PidPMuon, PidPBackground, Pid]
+      Function:
+          Name: calcRICHPID
+          PidLRichPion: PidLPion
+          PidLRichKaon: PidLKaon
+          PidLRichProton: PidLProton
+          PidLRichElectron: -1.0 #PidLElectron
+          PidLRichMuon: -1.0 #PidLMuon
+          PidLRichBackground: PidLBackground
+          Mom: Mom
+          Radius: RAtRICH
+          Angle: ParticleThetaAtRICH
+          PRatioCut: *RICHPidRatioCut
+          MomPionMin: *RICHMomPionMin
+          MomPionMax: *RICHMomPionMax
+          MomKaonMin: *RICHMomKaonMin
+          MomKaonMax: *RICHMomKaonMax
+          MomProtonMin: *RICHMomProtonMin
+          MomProtonMax: *RICHMomProtonMax
+          MomElectronMin: *RICHMomElectronMin
+          MomElectronMax: *RICHMomElectronMax
+          MomMuonMin: *RICHMomMuonMin
+          MomMuonMax: *RICHMomMuonMax
+          RadiusMin: *RICHRadiusMin
+          RadiusMax: *RICHRadiusMax
+          AngleMin: *RICHAngleMin
+          AngleMax: *RICHAngleMax
+      Indices: *allParticles
+
+# 3 momenta and lorentzvector of the positive Pion
+
+    - Name: &PionPosV3 PionPosV3
+      Function:
+          Name: getVector3
+          X: MomX3
+          Y: MomY3
+          Z: MomZ3
+
+    - Name: &KaonPosMomAbs PionPosMomAbs
+      Function:
+          Name: abs
+          Arg: PionPosV3
+
+
+    - Name: &PionPosLV PionPosLV
+      Function:
+          Name: getLorentzVec
+          X: MomX3
+          Y: MomY3
+          Z: MomZ3
+          M: *ChargedPionMass
+
+
+# 3 momenta and lorentzvector of the negative particles
+
+
+    - Name: [&KaonLV KaonLV, &PionNegLV PionNegLV, i_kp_pk, KaonPid, PionPid, KaonPidMct, PionPidMct]
+      Function:
+          Name: determineKaonPionLV
+          MomCandidate1: Mom1
+          PidCandidate1: Pid1
+          PidCandidate1Mct: 0
+          MomCandidate2: Mom2
+          PidCandidate2: Pid2
+          PidCandidate2Mct: 0
+          MassChargedKaon: *ChargedKaonMass
+          MassChargedPion: *ChargedPionMass
+          Method: 0 # 0: K- or pi-, 1: K-, 2: pi-
+
+
+    - Name: [ KaonMomX, KaonMomY, KaonMomZ, KaonMomPhi, KaonMomTheta ]
+      Function:
+          Name: getLorentzVectorAttributes
+          Vector: KaonLV
+
+    - Name: [ PionNegMomX, PionNegMomY, PionNegMomZ, PionNegMomPhi, PionNegMomTheta ]
+      Function:
+          Name: getLorentzVectorAttributes
+          Vector: PionNegLV
+
+    - Name: PionNegV3
+      Function:
+          Name: getVector3
+          X: PionNegMomX
+          Y: PionNegMomY
+          Z: PionNegMomZ
+
+    - Name: KaonV3
+      Function:
+          Name: getVector3
+          X: KaonMomX
+          Y: KaonMomY
+          Z: KaonMomZ
+
+    - Name: &PionNegMomAbs PionNegMomAbs
+      Function:
+          Name: abs
+          Arg: PionNegV3
+
+    - Name: &KaonMomAbs KaonMomAbs
+      Function:
+          Name: abs
+          Arg: KaonV3
+
+
+
+#################
+
+# For 3 body Mass
+
+    - Name: &XStateLV XStateLV
+      Function:
+          Name: sum
+          Summands:
+              - *KaonLV
+              - *PionNegLV
+              - *PionPosLV
+
+    - Name: &XStateMass XStateMass
+      Function:
+          Name: mass
+          Vector: *XStateLV
+
+
+# states
+############
+# KPiNeg-State 
+    - Name: &KPiNegStateLV KPiNegStateLV
+      Function:
+          Name: sum
+          Summands:
+              - *KaonLV
+              - *PionNegLV
+
+    - Name: &KPiNegStateMass KPiNegStateMass
+      Function:
+          Name: mass
+          Vector: *KPiNegStateLV
+
+    - Name: &KPiNegStateMassQrt KPiNegStateMassQrt
+      Function:
+          Name: mul
+          Factor1: KPiNegStateMass
+          Factor2: KPiNegStateMass
+
+
+
+# KPiPos-State 
+    - Name: &KPiPosStateLV KPiPosStateLV
+      Function:
+          Name: sum
+          Summands:
+              - *KaonLV
+              - *PionPosLV
+
+    - Name: &KPiPosStateMass KPiPosStateMass
+      Function:
+          Name: mass
+          Vector: *KPiPosStateLV
+
+    - Name: &KPiPosStateMassQrt KPiPosStateMassQrt
+      Function:
+          Name: mul
+          Factor1: KPiPosStateMass
+          Factor2: KPiPosStateMass
+
+
+# PionNegPionPos-State 
+    - Name: &PionNegPionPosStateLV PionNegPionPosStateLV
+      Function:
+          Name: sum
+          Summands:
+              - *PionNegLV
+              - *PionPosLV
+
+    - Name: &PionNegPionPosStateMass PionNegPionPosStateMass
+      Function:
+          Name: mass
+          Vector: *PionNegPionPosStateLV
+
+    - Name: &PionNegPionPosStateMassQrt PionNegPionPosStateMassQrt
+      Function:
+          Name: mul
+          Factor1: PionNegPionPosStateMass
+          Factor2: PionNegPionPosStateMass
+
+###############
+
+# For Beam energy cut
+
+    - Name: &BeamLV BeamLV
+      Function:
+          Name: getBeamLorentzVector
+          dX: *BeamdXdZ
+          dY: *BeamdYdZ
+          XLorentzVec: *XStateLV
+          BeamMass: *ChargedKaonMass
+          TargetMass: *ProtonMass
+
+    - Name: &BeamE BeamE
+      Function:
+          Name: energy
+          Vector: *BeamLV
+
+# For Recoil proton momentum cut
+
+    - Name: &RPDProtonLV RPDProtonLV
+      Function:
+          Name: getLorentzVec
+          Px: *RecoilMomX
+          Py: *RecoilMomY
+          Pz: *RecoilMomZ
+          E: *RecoilE
+
+
+    - Name: [&rpdDeltaPhiProjection rpdDeltaPhiProjection, &rpdDeltaPhiResProjection rpdDeltaPhiResProjection]
+      Function:
+        Name: getRpdPhi
+        Method: Projection
+        BeamLorentzVec: *BeamLV
+        RPDProtonLorentzVec: *RPDProtonLV
+        XLorentzVec: *XStateLV
+
+
+    - Name: &AbsRpdPhiProjection AbsRpdPhiProjection
+      Function:
+          Name: abs
+          Arg: *rpdDeltaPhiProjection
+
+
+    - Name: &RpdPhiCutDiffProjection RpdPhiCutDiffProjection
+      Function:
+          Name: diff
+          Minuend: *AbsRpdPhiProjection
+          Subtrahend: *rpdDeltaPhiResProjection
+
+# For t prime cut
+
+    - Name: [t, tMin, &tPrime tPrime]
+      Function:
+          Name: getTs
+          BeamLorentzVec: *BeamLV
+          XLorentzVec: *XStateLV
+          TargetMass: *ProtonMass
+
+# For Feynman x cut
+          
+    - Name: [KaonRapidity, &KaonxF KaonxF]
+      Function:
+          Name: calcRapidityXF
+          LV: KaonLV
+          LVBeam: BeamLV
+
+
+
+
+##############################################################
+# CUTS
+##############################################################
+Cuts:
+###############################
+
+# Only IsFilled events
+    - &IsSelectedCut
+      ShortName: IsSelected
+      LongName: "Is Selected by Phast"
+      Abbreviation: IsSel
+      Cut:
+          Name: Equality
+          Type: ==
+          Value: 1
+          Variable: *IsSelected
+
+# Beam time within 3 sigma t
+    - &BeamTrackTimeCut
+      ShortName: BeamTime3SigmaT
+      LongName: "Beam time within 3 sigma t"
+      Abbreviation: t3sigma
+      Cut:
+          Name: Range
+          Type: Exclusive
+          LowerBound: -2.20
+          UpperBound: 2.32
+          Variable: *BeamTrackTime
+
+
+# DT0 Trigger
+    - &TriggerMaskCut
+      ShortName: trigmask_&_DT0
+      LongName: Trigger Mask & DT0 Trigger
+      Abbreviation: Trig&0x1
+      Cut:
+          Name: TriggerMask
+          Type: Inclusive
+          Mask: 1
+          Variable: *TriggerMask
+
+
+# Vertex cuts 
+    - &CutOnePV
+      ShortName: OnePV
+      LongName: "Exactly one primary vetex"
+      Abbreviation: OnePV
+      Cut:
+          Name: Range
+          Type: Inclusive
+          UpperBound: 1
+          Variable: *NPrimaryVertices
+          
+          
+# Z Vertex cut
+    - &VertexZCut
+      ShortName: -65<vtx_z<-30
+      LongName: "Vertex Z in ]-65, -30["
+      Abbreviation: VtxZ
+      Cut:
+          Name: Range
+          Type: Exclusive
+          LowerBound: -65
+          UpperBound: -30
+          Variable: *PrimaryVertexZ          
+          
+# R Vertex cut
+    - &VertexRCut
+      ShortName: Vtx_R<1.5
+      LongName: Vertex_R < 1.5
+      Abbreviation: VtxR
+      Cut:
+          Name: Range
+          Type: Exclusive
+          UpperBound: 1.5
+          Variable: *PrimaryVertexR
+
+################
+# CEDAR
+    - &CutBeamPIDLikelihood
+      ShortName: BeamPID
+      LongName: "Beam was a Kaon"
+      Abbreviation: BeamPID
+      Cut:
+          Name: Equality
+          Type: "=="
+          Value: 0
+          Variable: BeamCEDARPid
+
+# Pi K Separation
+    - &CutParticleNegativePID
+      ShortName: PnegPID
+      LongName: "Clear K- pi- decision"
+      Abbreviation: PnegPID
+      Cut:
+          Name: Range
+          Type: Inclusive
+          LowerBound: 0
+          Variable: i_kp_pk
+
+# Final state ID veto
+    - &CutParticlePIDVetoBKG 
+      ShortName: PPIDVetoBKG
+      LongName: "No PID conflicting Kpipi"
+      Abbreviation: PPIDVetoBKG
+      Cut:
+          Name: Group
+          Type: And
+          Cuts:
+              - Cut:
+                  Name: Group
+                  Type: Or
+                  Cuts:
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 0
+                          Variable: Pid3
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: -1
+                          Variable: Pid3
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 5
+                          Variable: Pid3
+              - Cut:
+                  Name: Group
+                  Type: Or
+                  Cuts:
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 0
+                          Variable: Pid2
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 1
+                          Variable: Pid2
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: -1
+                          Variable: Pid2
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 5
+                          Variable: Pid2
+              - Cut:
+                  Name: Group
+                  Type: Or
+                  Cuts:
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 0
+                          Variable: Pid1
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 1
+                          Variable: Pid1
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: -1
+                          Variable: Pid1
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 5
+                          Variable: Pid1
+
+
+####################
+
+# Genau 1 RPD Track
+    - &nRPDTracksCut
+      ShortName: nRPDTracks=1
+      LongName: 1 RPD Track
+      Abbreviation: RPDtr
+      Cut:
+          Name: Equality
+          Type: ==
+          Value: 1
+          Variable: *RecoilnRPDTracks
+
+# Recoil proton momentum
+    - &RPDPlanarityCut
+      ShortName: RpdPlanarity
+      LongName: RPD planarity cut
+      Abbreviation: RpdPl
+      Cut:
+          Name: Range
+          Type: Exclusive
+          UpperBound: *rpdDeltaPhiResProjection
+          Variable: *AbsRpdPhiProjection
+
+
+# Beam energy within 3 sigma E
+    - &ExclusivityCut
+      ShortName: 186.14<X.E()<196.44
+      LongName: "X Energy in ]186.14, 196.44["
+      Abbreviation: Excl
+      Cut:
+          Name: Range
+          Type: Exclusive
+          LowerBound: 186.14
+          UpperBound: 196.44
+          Variable: *BeamE
+
+
+# Central Production Veto
+    - &CentralProductionCut
+      ShortName: x_F_Cut
+      LongName: "x_F in ]0, 0.90["
+      Abbreviation: x_F
+      Cut:
+          Name: Range
+          Type: Exclusive
+          UpperBound: 0.90
+          Variable: *KaonxF
+
+
+# t prime cut
+    - &TPrimeCut
+      ShortName: t_prim
+      LongName: "t' in ]0.1, 1.["
+      Abbreviation: t'
+      Cut:
+          Name: Range
+          Type: Exclusive
+          LowerBound: 0.1
+          UpperBound: 1.0
+          Variable: *tPrime
+
+# 3 body mass cut
+    - &KPiPiMassCut
+      ShortName: KPiPi_Mass
+      LongName: "KPiPi Mass in ]1.0, 3.5["
+      Abbreviation: KPiPiMass
+      Cut:
+          Name: Range
+          Type: Exclusive
+          LowerBound: 1.0
+          UpperBound: 3.5
+          Variable: *XStateMass
+
+
+#############################################################################################
+# CUT TRAINS
+#############################################################################################
+CutTrains:
+    - &MainTrain 
+      Name: MainTrain
+      Cuts: &CutsMainTrain
+        - *IsSelectedCut
+        - *BeamTrackTimeCut
+        - *TriggerMaskCut
+        - *CutOnePV
+        - *VertexZCut
+        - *VertexRCut
+        - *CutBeamPIDLikelihood
+        - *CutParticleNegativePID
+        - *CutParticlePIDVetoBKG
+        - *nRPDTracksCut
+        - *RPDPlanarityCut
+        - *ExclusivityCut
+        - *CentralProductionCut
+        - *TPrimeCut
+        - *KPiPiMassCut
+      Pertinent: No
+
+#############################################################################################
+# Options
+#############################################################################################
+GlobalPlotOptions:
+
+    PlotsForSequentialCuts: On
+    PlotsWithSingleCutsOn: On
+    PlotsWithSingleCutsOff: On
+    StatisticsHistogram:
+        State: On
+        InputName: "UserEvent200/Cuts"
+        OutputName: waterfallPlot
+    GlobalCuts: []
+    HistogramNameAppendix: "_hist"
+
+#############################################################################################
+# Plots
+#############################################################################################
+Plots:
+
+################################
+# Beam info
+    - Name: PrimaryVertexZ
+      Variable: *PrimaryVertexZ
+      LowerBound: -200.0
+      UpperBound: 160.0
+      NBins:  720
+
+    - Name: PrimaryVertexXY
+      Variables: [ *PrimaryVertexX, *PrimaryVertexY ]
+      LowerBounds: [ -4.0, -4.0 ]
+      UpperBounds: [ 4.0, 4.0 ]
+      NBins: [ 800, 800 ]
+
+    - Name: Beam Energy
+      Variable: *BeamE
+      LowerBound: 0.0
+      UpperBound: 230.0
+      NBins:  2300
+
+# Detector
+    - Name: RpdPhi Projection
+      Variable: *rpdDeltaPhiProjection
+      LowerBound: -3.0
+      UpperBound: 3.0
+      NBins:  3000
+
+    - Name: RpdPhi vs Beam energy
+      Variables: [ *BeamE, *rpdDeltaPhiProjection ]
+      LowerBounds: [ 150, -2 ]
+      UpperBounds: [ 230, 2 ]
+      NBins: [ 800, 1000 ]
+
+# T Prime
+    - Name: T Prime
+      Variable: *tPrime
+      LowerBound: 0.0
+      UpperBound: 3.0
+      NBins:  3000
+
+# Feyman x 
+    - Name: KaonxF
+      Variable: *KaonxF
+      LowerBound: 0.0
+      UpperBound: 1.0
+      NBins:  1000
+
+# Invariant mass spectrum of the diffractivly produced K-Pi-Pi+ system
+    - Name: "3 body mass"
+      Variable: *XStateMass
+      LowerBound: 0.0
+      UpperBound: 7.0
+      NBins: 1400
+
+# Dalitz
+    - Name: Dalitz KPiPos versus PionNegPionPos
+      Variables: [ *PionNegPionPosStateMassQrt, *KPiPosStateMassQrt, *XStateMass]
+      LowerBounds: [ 0.0, 0.0, 1.6 ]
+      UpperBounds: [ 6.0, 6.0, 3.5 ]
+      NBins: [ 300, 300, 19 ]
+
