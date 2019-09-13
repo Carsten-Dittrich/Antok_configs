@@ -847,7 +847,7 @@ Plots:
 
 
 # Dalitz Plots
-    - Name: Dalitz KNegPi versus KPosPi
+    - Name: Dalitz KPosPi versus KNegKPos
       Variables: [ *KNegKPosStateMassQrt, *KPosPiStateMassQrt, *XStateMass]
       LowerBounds: [ 0.0, 0.0, 1.6 ]
       UpperBounds: [ 6.0, 6.0, 3.5 ]
