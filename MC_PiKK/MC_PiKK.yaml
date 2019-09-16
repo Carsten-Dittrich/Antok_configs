@@ -625,13 +625,11 @@ CutTrains:
         - *CutOnePV
         - *VertexZCut
         - *VertexRCut
-        - *CutBeamPIDLikelihood
         - *SoftParticlePIDCut
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
         - *CentralProductionCut
-        - *TPrimeCut
         - *PiKKMassCut
       Pertinent: No
 
@@ -707,13 +705,6 @@ Plots:
       LowerBound: 0.0
       UpperBound: 3.0
       NBins:  3000
-
-# Feyman x 
-    - Name: PionxF
-      Variable: *PionxF
-      LowerBound: 0.0
-      UpperBound: 1.0
-      NBins:  1000
 
 # momentum plots
     - Name: KaonPosMomAbs
