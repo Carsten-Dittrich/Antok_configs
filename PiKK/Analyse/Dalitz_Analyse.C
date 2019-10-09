@@ -10,10 +10,10 @@
 
 void Dalitz_Analyse(){
   //File Oeffnen
-  auto f1 = TFile::Open("/nfs/freenas/tuph/e18/project/compass/analysis/cdittrich/Antok/build/bin/Completed_Runs/All_Data_PiKK.root", "READ");
+  auto f1 = TFile::Open("/nfs/freenas/tuph/e18/project/compass/analysis/cdittrich/Completed_Runs/2008Data_PiKK.root", "READ");
   // Histogramme benennen und zuweisen
   TH3D* h3 = nullptr;
-  f1->GetObject("MainTrainSoft/Dalitz KNegKPos versus KNegPi/Dalitz KNegKPos versus KNegPi_1111111111111_hist", h3);
+  f1->GetObject("MainTrainSoft/Dalitz KPosPi versus KNegKPos/Dalitz KPosPi versus KNegKPos_1111111111111_hist", h3);
   
   
   //Canvas erzeugen 

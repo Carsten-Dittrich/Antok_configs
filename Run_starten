@@ -1,1 +1,2 @@
-./run /nfs/mds/tmp/ga34liw/EventSelection/KPiPi/phast_selection/2008/uDST-69886* -c /nfs/freenas/tuph/e18/project/compass/analysis/cdittrich/Antok/config/PiKK-Decay/PiKK.yaml -o PiKK.root
+./run /nfs/mds/tmp/ga42bil/MC_KKPi2/jobs/uDST.root -c /nfs/freenas/tuph/e18/project/compass/analysis/cdittrich/Antok_configs/MC_PiKK/MC_PiKK.yaml -o /nfs/freenas/tuph/e18/project/compass/analysis/cdittrich/Completed_Runs/InWork/MC_PiKK_Moi.root
+
