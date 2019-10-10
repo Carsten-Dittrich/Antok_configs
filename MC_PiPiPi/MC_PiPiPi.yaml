@@ -486,6 +486,47 @@ Cuts:
           Value: 1
           Variable: BeamCEDARPid
 
+
+# Hard PID cut
+# If set on all 3 PId -> No Events were left
+# Therefore h3+ = K+ and either h1- or h2- = K-
+    - &HardParticlePIDCut 
+      ShortName: HardPIDCut
+      LongName: "Hard Particle PID Cut"
+      Abbreviation: HPID
+      Cut:
+          Name: Group
+          Type: Or
+          Cuts:
+              - Cut:
+                  Name: Group
+                  Type: And
+                  Cuts:
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 1
+                          Variable: Pid3
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 1
+                          Variable: Pid1
+              - Cut:
+                  Name: Group
+                  Type: And
+                  Cuts:
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 1
+                          Variable: Pid3
+                      - Cut:
+                          Name: Equality
+                          Type: "=="
+                          Value: 1
+                          Variable: Pid2
+
 # Soft PID cut
     - &SoftParticlePIDCut 
       ShortName: SoftPIDCut
@@ -633,7 +674,23 @@ CutTrains:
         - *PiKKMassCut
       Pertinent: No
 
-
+    - &MainTrainHard 
+      Name: MainTrainHard
+      Cuts: &CutsMainTrainHard
+        - *IsSelectedCut
+        - *BeamTrackTimeCut
+        - *TriggerMaskCut
+        - *CutOnePV
+        - *VertexZCut
+        - *VertexRCut
+        - *HardParticlePIDCut
+        - *nRPDTracksCut
+        - *RPDPlanarityCut
+        - *ExclusivityCut
+        - *CentralProductionCut
+        - *PiKKMassCut
+      Pertinent: No
+      
 #############################################################################################
 # Options
 #############################################################################################
