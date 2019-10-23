@@ -438,7 +438,7 @@ Cuts:
           
 # Z Vertex cut
     - &VertexZCut
-      ShortName: -65<vtx_z<-30
+      ShortName: -65<Vtx_Z<-30
       LongName: "Vertex Z in ]-65, -30["
       Abbreviation: VtxZ
       Cut:
@@ -451,7 +451,7 @@ Cuts:
 # R Vertex cut
     - &VertexRCut
       ShortName: Vtx_R<1.5
-      LongName: Vertex_R < 1.5
+      LongName: Vertex R < 1.5
       Abbreviation: VtxR
       Cut:
           Name: Range
@@ -654,7 +654,6 @@ CutTrains:
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
-        - *CentralProductionCut
         - *TPrimeCut
         - *PiKKMassCut
       Pertinent: No
@@ -672,7 +671,6 @@ CutTrains:
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
-        - *CentralProductionCut
         - *TPrimeCut
         - *PiKKMassCut
       Pertinent: No
@@ -749,12 +747,6 @@ Plots:
       UpperBound: 3.0
       NBins:  3000
 
-# Feyman x 
-    - Name: PionxF
-      Variable: *PionxF
-      LowerBound: 0.0
-      UpperBound: 1.0
-      NBins:  1000
 
 # Pid testing
     - Name: Pid1
@@ -788,7 +780,7 @@ Plots:
       UpperBound: 200.0
       NBins:  500
 
-    - Name: PionMomAbsPlot
+    - Name: PionMomAbs
       Variable: *PionMomAbs
       LowerBound: 0.0
       UpperBound: 200.0
