@@ -838,7 +838,7 @@ Plots:
       UpperBounds: [ 1.0, 4.0 ]
       NBins: [ 200, 200 ]
 
-    - Name: HF_phi_KK versus HF_cost_KK
+    - Name: HF_phi_PiK versus HF_cost_PiK
       Variables: [ *HF_cost_PiK, *HF_phi_PiK ]
       LowerBounds: [ -1.0, -4.0 ]
       UpperBounds: [ 1.0, 4.0 ]
