@@ -398,6 +398,27 @@ CalculatedQuantities:
           LVBeam: BeamLV
 
 
+# Gottfried Jackson Angles
+
+    - Name: [ &GJ_cost_KK GJ_cost_KK, &GJ_phi_KK GJ_phi_KK, &HF_cost_KK HF_cost_KK, &HF_phi_KK HF_phi_KK ]
+      Function:
+          Name: calcAngles3P
+          LVBachelor: PionLV
+          LVIsoDaughter1: KaonNegLV
+          LVIsoDaughter2: KaonPosLV
+          LVBeam: BeamLV
+          TargetMass: *ProtonMass
+
+    - Name: [ &GJ_cost_PiK GJ_cost_PiK, &GJ_phi_PiK GJ_phi_PiK, &HF_cost_PiK HF_cost_PiK, &HF_phi_PiK HF_phi_PiK ]
+      Function:
+          Name: calcAngles3P
+          LVBachelor: KaonNegLV
+          LVIsoDaughter1: PionLV
+          LVIsoDaughter2: KaonPosLV
+          LVBeam: BeamLV
+          TargetMass: *ProtonMass
+
+
 #############################################################################################
 # CUTS
 #############################################################################################
@@ -629,7 +650,7 @@ CutTrains:
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
-        - *CentralProductionCut
+        - *TPrimeCut
         - *PiKKMassCut
       Pertinent: No
 
@@ -719,7 +740,7 @@ Plots:
       UpperBound: 200.0
       NBins:  500
 
-    - Name: PionMomAbsPlot
+    - Name: PionMomAbs
       Variable: *PionMomAbs
       LowerBound: 0.0
       UpperBound: 200.0
@@ -795,3 +816,32 @@ Plots:
       LowerBound: 0.0
       UpperBound: 7.0
       NBins: 1400
+
+# Gottfried Jackson
+
+    - Name: GJ_phi_KK versus GJ_cost_KK
+      Variables: [ *GJ_cost_KK, *GJ_phi_KK ]
+      LowerBounds: [ -1.0, -4.0 ]
+      UpperBounds: [ 1.0, 4.0 ]
+      NBins: [ 200, 200 ]
+
+    - Name: HF_phi_KK versus HF_cost_KK
+      Variables: [ *HF_cost_KK, *HF_phi_KK ]
+      LowerBounds: [ -1.0, -4.0 ]
+      UpperBounds: [ 1.0, 4.0 ]
+      NBins: [ 200, 200 ]
+
+
+    - Name: GJ_phi_PiK versus GJ_cost_PiK
+      Variables: [ *GJ_cost_PiK, *GJ_phi_PiK ]
+      LowerBounds: [ -1.0, -4.0 ]
+      UpperBounds: [ 1.0, 4.0 ]
+      NBins: [ 200, 200 ]
+
+    - Name: HF_phi_KK versus HF_cost_KK
+      Variables: [ *HF_cost_PiK, *HF_phi_PiK ]
+      LowerBounds: [ -1.0, -4.0 ]
+      UpperBounds: [ 1.0, 4.0 ]
+      NBins: [ 200, 200 ]
+
+
