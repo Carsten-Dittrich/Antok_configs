@@ -37,6 +37,12 @@ TreeBranches:
               - &MCT_PiPiPi_PrimaryVertexY MCT_PiPiPi_PrimaryVertexY
               - &MCT_PiPiPi_PrimaryVertexZ MCT_PiPiPi_PrimaryVertexZ
               - &MCT_PiPiPi_Xmass MCT_PiPiPi_Xmass
+	
+	TLorentzVector:
+              - &MCT_PiPosMom MCT_PiPiPi_PiPos_Mom
+              - &MCT_PiNeg1Mom MCT_PiPiPi_PiNeg1_Mom
+              - &MCT_PiNeg2Mom MCT_PiPiPi_PiNeg2_Mom
+              - &MCT_BeamMom MCT_PiPiPi_Beam_Mom
 
 
     onePerParticle:
