@@ -659,11 +659,25 @@ Cuts:
           UpperBound: 3.5
           Variable: *XStateMass
 
+
+
+    - &PiKKMassCutMC
+      ShortName: PiKK_MassMC
+      LongName: "PiKK MassMC in ]1.0, 3.5["
+      Abbreviation: PiKKMassMC
+      Cut:
+          Name: Range
+          Type: Exclusive
+          LowerBound: 1.0
+          UpperBound: 2.5
+          Variable: *MCT_PiPiPi_Xmass
+
+
 #############################################################################################
 # CUT TRAINS
 #############################################################################################
 CutTrains:
-    - &MainTrainSoft 
+    - &MainTrainSoft
       Name: MainTrainSoft
       Cuts: &CutsMainTrainSoft
         - *IsSelectedCut
@@ -680,7 +694,7 @@ CutTrains:
         - *PiKKMassCut
       Pertinent: No
 
-    - &MainTrainHard 
+    - &MainTrainHard
       Name: MainTrainHard
       Cuts: &CutsMainTrainHard
         - *IsSelectedCut
@@ -695,6 +709,13 @@ CutTrains:
         - *ExclusivityCut
         - *TPrimeCut
         - *PiKKMassCut
+      Pertinent: No
+
+
+    - &MC
+      Name: MC
+      Cuts: &CutsMC
+        - *PiKKMassCutMC
       Pertinent: No
       
 #############################################################################################
@@ -768,6 +789,12 @@ Plots:
       LowerBound: 0.0
       UpperBound: 3.0
       NBins:  3000
+
+    - Name: T Prime MC
+      Variable: *tPrime
+      LowerBound: 0.1
+      UpperBound: 1.0
+      NBins:  900
 
 # momentum plots
     - Name: KaonPosMomAbs
