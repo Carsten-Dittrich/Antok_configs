@@ -37,8 +37,8 @@ TreeBranches:
               - &MCT_PiPiPi_PrimaryVertexY MCT_PiPiPi_PrimaryVertexY
               - &MCT_PiPiPi_PrimaryVertexZ MCT_PiPiPi_PrimaryVertexZ
               - &MCT_PiPiPi_Xmass MCT_PiPiPi_Xmass
-	
-	TLorentzVector:
+
+        TLorentzVector:
               - &MCT_PiPosMom MCT_PiPiPi_PiPos_Mom
               - &MCT_PiNeg1Mom MCT_PiPiPi_PiNeg1_Mom
               - &MCT_PiNeg2Mom MCT_PiPiPi_PiNeg2_Mom
@@ -676,7 +676,7 @@ CutTrains:
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
-        - *CentralProductionCut
+        - *TPrimeCut
         - *PiKKMassCut
       Pertinent: No
 
@@ -693,7 +693,7 @@ CutTrains:
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
-        - *CentralProductionCut
+        - *TPrimeCut
         - *PiKKMassCut
       Pertinent: No
       
