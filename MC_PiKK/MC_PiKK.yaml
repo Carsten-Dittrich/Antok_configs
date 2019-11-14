@@ -38,6 +38,12 @@ TreeBranches:
               - &MCT_KKPi_PrimaryVertexZ MCT_KKPi_PrimaryVertexZ
               - &MCT_KKPi_Xmass MCT_KKPi_Xmass
 
+        TLorentzVector:
+              - &MCT_KPosMom MCT_KKPi_KPos_Mom
+              - &MCT_KNegMom MCT_KKPi_KNeg_Mom
+              - &MCT_PiNegMom MCT_KKPi_PiNeg_Mom
+              - &MCT_BeamMom MCT_KKPi_Beam_Mom
+
 
     onePerParticle:
         double:
@@ -329,6 +335,68 @@ CalculatedQuantities:
           Factor1: KNegKPosStateMass
           Factor2: KNegKPosStateMass
 
+
+# states MONTE CARLO
+############
+# KNegPi-State 
+    - Name: &MCKNegPiStateLV MCKNegPiStateLV
+      Function:
+          Name: sum
+          Summands:
+              - *MCT_KNegMom
+              - *MCT_PiNegMom
+
+    - Name: &MCKNegPiStateMass MCKNegPiStateMass
+      Function:
+          Name: mass
+          Vector: *MCKNegPiStateLV
+
+    - Name: &MCKNegPiStateMassQrt MCKNegPiStateMassQrt
+      Function:
+          Name: mul
+          Factor1: MCKNegPiStateMass
+          Factor2: MCKNegPiStateMass
+
+
+
+# KPosPi-State 
+    - Name: &MCKPosPiStateLV MCKPosPiStateLV
+      Function:
+          Name: sum
+          Summands:
+              - *MCT_KPosMom
+              - *MCT_PiNegMom
+
+    - Name: &MCKPosPiStateMass MCKPosPiStateMass
+      Function:
+          Name: mass
+          Vector: *MCKPosPiStateLV
+
+    - Name: &MCKPosPiStateMassQrt MCKPosPiStateMassQrt
+      Function:
+          Name: mul
+          Factor1: MCKPosPiStateMass
+          Factor2: MCKPosPiStateMass
+
+
+# KNegKPos-State 
+    - Name: &MCKNegKPosStateLV MCKNegKPosStateLV
+      Function:
+          Name: sum
+          Summands:
+              - *MCT_KNegMom
+              - *MCT_KPosMom
+
+    - Name: &MCKNegKPosStateMass MCKNegKPosStateMass
+      Function:
+          Name: mass
+          Vector: *MCKNegKPosStateLV
+
+    - Name: &MCKNegKPosStateMassQrt MCKNegKPosStateMassQrt
+      Function:
+          Name: mul
+          Factor1: MCKNegKPosStateMass
+          Factor2: MCKNegKPosStateMass
 ###############
 
 # For Beam energy cut
@@ -780,6 +848,25 @@ Plots:
 
     - Name: KNegKPosStateMass
       Variable: *KNegKPosStateMass
+      LowerBound: 0.0
+      UpperBound: 4.0
+      NBins:  800
+
+# Invariant mass spectra of the two-body subsystem MONTE CARLO
+    - Name: MCKNegPiStateMass
+      Variable: *MCKNegPiStateMass
+      LowerBound: 0.0
+      UpperBound: 4.0
+      NBins:  800
+
+    - Name: MCKPosPiStateMass
+      Variable: *MCKPosPiStateMass
+      LowerBound: 0.0
+      UpperBound: 4.0
+      NBins:  800
+
+    - Name: MCKNegKPosStateMass
+      Variable: *MCKNegKPosStateMass
       LowerBound: 0.0
       UpperBound: 4.0
       NBins:  800
