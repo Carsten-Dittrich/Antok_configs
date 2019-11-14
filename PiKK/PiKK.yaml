@@ -427,7 +427,7 @@ Cuts:
 # Vertex cuts 
     - &CutOnePV
       ShortName: OnePV
-      LongName: "Exactly one primary vetex"
+      LongName: "Exactly one primary vertex"
       Abbreviation: OnePV
       Cut:
           Name: Range
@@ -673,7 +673,7 @@ CutTrains:
         - *ExclusivityCut
         - *TPrimeCut
         - *PiKKMassCut
-      Pertinent: No
+      Pertinent: Yes
 
 
 #############################################################################################
