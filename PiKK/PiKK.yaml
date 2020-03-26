@@ -641,22 +641,22 @@ Cuts:
 # CUT TRAINS
 #############################################################################################
 CutTrains:
-    - &MainTrainHard 
-      Name: MainTrainHard
-      Cuts: &CutsMainTrainHard
-        - *BeamTrackTimeCut
-        - *TriggerMaskCut
-        - *CutOnePV
-        - *VertexZCut
-        - *VertexRCut
-        - *CutBeamPIDLikelihood
-        - *HardParticlePIDCut
-        - *nRPDTracksCut
-        - *RPDPlanarityCut
-        - *ExclusivityCut
-        - *TPrimeCut
-        - *PiKKMassCut
-      Pertinent: No
+#    - &MainTrainHard 
+#      Name: MainTrainHard
+#      Cuts: &CutsMainTrainHard
+#        - *BeamTrackTimeCut
+#        - *TriggerMaskCut
+#        - *CutOnePV
+#        - *VertexZCut
+#        - *VertexRCut
+#        - *CutBeamPIDLikelihood
+#        - *HardParticlePIDCut
+#        - *nRPDTracksCut
+#        - *RPDPlanarityCut
+#        - *ExclusivityCut
+#        - *TPrimeCut
+#        - *PiKKMassCut
+#      Pertinent: No
 
     - &MainTrainSoft 
       Name: MainTrainSoft
@@ -671,8 +671,8 @@ CutTrains:
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
-        - *TPrimeCut
-        - *PiKKMassCut
+#        - *TPrimeCut
+#        - *PiKKMassCut
       Pertinent: Yes
 
 
@@ -837,6 +837,13 @@ Plots:
       UpperBounds: [ 3.0, 3.0 ]
       NBins: [ 200, 250 ]
 
+
+# T Prime against Three body mass
+    - Name: tPrime versus XStateMass
+      Variables: [ *tPrime, *XStateMass ]
+      LowerBounds: [ 0.0, 0.0 ]
+      UpperBounds: [ 3.0, 7.0 ]
+      NBins: [ 300, 280 ]
 
 # Dalitz Plots
     - Name: Dalitz KPosPi versus KNegKPos
