@@ -37,6 +37,8 @@ TreeBranches:
               - &MCT_KKPi_PrimaryVertexY MCT_KKPi_PrimaryVertexY
               - &MCT_KKPi_PrimaryVertexZ MCT_KKPi_PrimaryVertexZ
               - &MCT_KKPi_Xmass MCT_KKPi_Xmass
+              - &MctTPrime MCT_KPiPi_tPrime
+
 
         TLorentzVector:
               - &MCT_KPosMom MCT_KKPi_KPos_Mom
@@ -932,3 +934,18 @@ Plots:
       NBins: [ 200, 200 ]
 
 
+OutputTree:
+
+    - BeamLV
+    - XStateMass
+    - tPrime
+    - KaonPosLV
+    - KaonNegLV
+    - PionLV
+    - BeamLV
+    - MCT_KKPi_XMass
+    - *MCT_KNegMom
+    - *MCT_KPosMom
+    - *MCT_PiNegMom
+    - *MCT_BeamMom
+    - *&MctTPrime

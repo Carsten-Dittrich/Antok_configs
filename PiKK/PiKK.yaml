@@ -853,4 +853,13 @@ Plots:
       NBins: [ 300, 300, 19 ]
 
 
+OutputTree:
+
+    - BeamLV
+    - XStateMass
+    - tPrime
+    - KaonPosLV
+    - KaonNegLV
+    - PionLV
+    - BeamLV
 
