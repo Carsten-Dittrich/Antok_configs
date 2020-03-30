@@ -119,8 +119,8 @@ CalculatedQuantities:
           - *PrimaryVertexX
           - *PrimaryVertexY
 
-##########################
-# For CEDAR cut
+###############################
+# CEDAR Information
     - Name: [BeamCEDARPid, BeamCEDAR1LogLikeDiff, BeamCEDAR2LogLikeDiff, BeamCEDARLogLikeDiff]
       Function:
           Name: calcCEDARPID
@@ -255,9 +255,9 @@ CalculatedQuantities:
           Name: abs
           Arg: KaonNegV3
 
-
-
-#################
+####################################################
+# Kinetic variables
+####################################################
 
 # For 3 body Mass
 
@@ -274,9 +274,10 @@ CalculatedQuantities:
           Name: mass
           Vector: *XStateLV
 
-
+########################
 # states
-############
+########################
+
 # KNegPi-State 
     - Name: &KNegPiStateLV KNegPiStateLV
       Function:
@@ -295,8 +296,6 @@ CalculatedQuantities:
           Name: mul
           Factor1: KNegPiStateMass
           Factor2: KNegPiStateMass
-
-
 
 # KPosPi-State 
     - Name: &KPosPiStateLV KPosPiStateLV
@@ -317,7 +316,6 @@ CalculatedQuantities:
           Factor1: KPosPiStateMass
           Factor2: KPosPiStateMass
 
-
 # KNegKPos-State 
     - Name: &KNegKPosStateLV KNegKPosStateLV
       Function:
@@ -337,9 +335,10 @@ CalculatedQuantities:
           Factor1: KNegKPosStateMass
           Factor2: KNegKPosStateMass
 
-
+########################
 # states MONTE CARLO
-############
+########################
+
 # KNegPi-State 
     - Name: &MCKNegPiStateLV MCKNegPiStateLV
       Function:
@@ -358,8 +357,6 @@ CalculatedQuantities:
           Name: mul
           Factor1: MCKNegPiStateMass
           Factor2: MCKNegPiStateMass
-
-
 
 # KPosPi-State 
     - Name: &MCKPosPiStateLV MCKPosPiStateLV
@@ -380,7 +377,6 @@ CalculatedQuantities:
           Factor1: MCKPosPiStateMass
           Factor2: MCKPosPiStateMass
 
-
 # KNegKPos-State 
     - Name: &MCKNegKPosStateLV MCKNegKPosStateLV
       Function:
@@ -399,9 +395,11 @@ CalculatedQuantities:
           Name: mul
           Factor1: MCKNegKPosStateMass
           Factor2: MCKNegKPosStateMass
-###############
 
-# For Beam energy cut
+
+################################
+# Beam energy, RPD and tPrime
+################################
 
     - Name: &BeamLV BeamLV
       Function:
@@ -417,7 +415,7 @@ CalculatedQuantities:
           Name: energy
           Vector: *BeamLV
 
-# For Recoil proton momentum cut
+# RPD
 
     - Name: &RPDProtonLV RPDProtonLV
       Function:
@@ -449,7 +447,7 @@ CalculatedQuantities:
           Minuend: *AbsRpdPhiProjection
           Subtrahend: *rpdDeltaPhiResProjection
 
-# For t prime cut
+# tPrime
 
     - Name: [t, tMin, &tPrime tPrime]
       Function:
@@ -460,6 +458,7 @@ CalculatedQuantities:
 
 
 # For Feynman x cut
+# (No effect)
 
     - Name: [PionRapidity, &PionxF PionxF]
       Function:
@@ -467,8 +466,9 @@ CalculatedQuantities:
           LV: PionLV
           LVBeam: BeamLV
 
-
+################################
 # Gottfried Jackson Angles
+################################
 
     - Name: [ &GJ_cost_KK GJ_cost_KK, &GJ_phi_KK GJ_phi_KK, &HF_cost_KK HF_cost_KK, &HF_phi_KK HF_phi_KK ]
       Function:
@@ -494,7 +494,7 @@ CalculatedQuantities:
 #############################################################################################
 Cuts:
 ###############################
-# Only IsFilled events
+# Only IsFilled events (For MC --> Phast selection)
     - &IsSelectedCut
       ShortName: IsSelected
       LongName: "Is Selected by Phast"
@@ -747,9 +747,9 @@ GlobalPlotOptions:
 #############################################################################################
 Plots:
 
-#############################################################################################
+#####################################
 # Plots Detector
-#############################################################################################
+#####################################
 
 # Beam info
     - Name: PrimaryVertexZ
@@ -790,14 +790,10 @@ Plots:
       UpperBounds: [ 230, 2 ]
       NBins: [ 800, 1000 ]
 
-# T Prime
-    - Name: T Prime
-      Variable: *tPrime
-      LowerBound: 0.0
-      UpperBound: 3.0
-      NBins:  3000
-
+#####################################
 # momentum plots
+#####################################
+
     - Name: KaonPosMomAbs
       Variable: *KaonPosMomAbs
       LowerBound: 0.0
@@ -827,6 +823,10 @@ Plots:
       LowerBounds: [ 0.0, 0.0 ]
       UpperBounds: [ 200.0, 200.0 ]
       NBins: [ 500, 500 ]
+      
+#####################################
+# kinematics
+#####################################
 
 # Invariant mass spectrum of the diffractivly produced K-Pi-K+ system
     - Name: "3 body mass"
@@ -834,6 +834,13 @@ Plots:
       LowerBound: 0.0
       UpperBound: 7.0
       NBins: 1400
+     
+# T Prime
+    - Name: T Prime
+      Variable: *tPrime
+      LowerBound: 0.0
+      UpperBound: 3.0
+      NBins:  3000
 
 # Invariant mass spectra of the two-body subsystem
     - Name: KNegPiStateMass
@@ -850,25 +857,6 @@ Plots:
 
     - Name: KNegKPosStateMass
       Variable: *KNegKPosStateMass
-      LowerBound: 0.0
-      UpperBound: 4.0
-      NBins:  800
-
-# Invariant mass spectra of the two-body subsystem MONTE CARLO
-    - Name: MCKNegPiStateMass
-      Variable: *MCKNegPiStateMass
-      LowerBound: 0.0
-      UpperBound: 4.0
-      NBins:  800
-
-    - Name: MCKPosPiStateMass
-      Variable: *MCKPosPiStateMass
-      LowerBound: 0.0
-      UpperBound: 4.0
-      NBins:  800
-
-    - Name: MCKNegKPosStateMass
-      Variable: *MCKNegKPosStateMass
       LowerBound: 0.0
       UpperBound: 4.0
       NBins:  800
@@ -905,12 +893,38 @@ Plots:
 # Plots Monte Carlo
 #############################################################################################
 
+# Invariant mass spectra of the two-body subsystem
+    - Name: MCKNegPiStateMass
+      Variable: *MCKNegPiStateMass
+      LowerBound: 0.0
+      UpperBound: 4.0
+      NBins:  800
+
+    - Name: MCKPosPiStateMass
+      Variable: *MCKPosPiStateMass
+      LowerBound: 0.0
+      UpperBound: 4.0
+      NBins:  800
+
+    - Name: MCKNegKPosStateMass
+      Variable: *MCKNegKPosStateMass
+      LowerBound: 0.0
+      UpperBound: 4.0
+      NBins:  800
+      
 # Invariant mass spectrum of the diffractivly produced K-Pi-K+ system
     - Name: "3 body mass MC"
       Variable: *MCT_KKPi_Xmass
       LowerBound: 0.0
       UpperBound: 7.0
       NBins: 1400
+      
+# T Prime
+    - Name: MC_tPrime
+      Variable: *MctTPrime
+      LowerBound: 0.0
+      UpperBound: 3.0
+      NBins:  3000
 
 # Gottfried Jackson
 
