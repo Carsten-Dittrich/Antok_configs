@@ -37,7 +37,7 @@ TreeBranches:
               - &MCT_KKPi_PrimaryVertexY MCT_KKPi_PrimaryVertexY
               - &MCT_KKPi_PrimaryVertexZ MCT_KKPi_PrimaryVertexZ
               - &MCT_KKPi_Xmass MCT_KKPi_Xmass
-              - &MctTPrime MCT_KPiPi_tPrime
+              - &MctTPrime MCT_KKPi_tPrime
 
 
         TLorentzVector:
@@ -720,9 +720,9 @@ CutTrains:
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
-        - *TPrimeCut
-        - *PiKKMassCut
-      Pertinent: No
+#        - *TPrimeCut
+#        - *PiKKMassCut
+      Pertinent: Yes
 
 
 #############################################################################################
@@ -886,6 +886,12 @@ Plots:
       UpperBounds: [ 3.0, 3.0 ]
       NBins: [ 200, 250 ]
 
+# T Prime against Three body mass
+    - Name: tPrime versus XStateMass
+      Variables: [ *tPrime, *XStateMass ]
+      LowerBounds: [ 0.0, 0.0 ]
+      UpperBounds: [ 3.0, 7.0 ]
+      NBins: [ 300, 280 ]
 
 # Dalitz Plots
     - Name: Dalitz KNegPi versus KPosPi
@@ -943,9 +949,9 @@ OutputTree:
     - KaonNegLV
     - PionLV
     - BeamLV
-    - MCT_KKPi_XMass
+    - MCT_KKPi_Xmass
     - *MCT_KNegMom
     - *MCT_KPosMom
     - *MCT_PiNegMom
     - *MCT_BeamMom
-    - *&MctTPrime
+    - *MctTPrime
