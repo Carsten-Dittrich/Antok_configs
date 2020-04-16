@@ -16,6 +16,9 @@ TreeBranches:
             - &NPrimaryVertices NPrimaryVertices
             - &BeamCEDAR1Majority BeamCEDAR1Majority
             - &BeamCEDAR2Majority BeamCEDAR2Majority
+            - &MC_Pid1 PidMCT1
+            - &MC_Pid2 PidMCT2
+            - &MC_Pid3 PidMCT3
 
         double:
               - &PrimaryVertexX PrimaryVertexX
@@ -212,10 +215,10 @@ CalculatedQuantities:
           Name: determineKaonPionLV
           MomCandidate1: Mom1
           PidCandidate1: Pid1
-          PidCandidate1Mct: 0
+          PidCandidate1Mct: *MC_Pid1
           MomCandidate2: Mom2
           PidCandidate2: Pid2
-          PidCandidate2Mct: 0
+          PidCandidate2Mct: *MC_Pid2
           MassChargedKaon: *ChargedKaonMass
           MassChargedPion: *ChargedPionMass
           Method: 0 # 0: K- or pi-, 1: K-, 2: pi-
@@ -952,6 +955,72 @@ Plots:
       LowerBounds: [ -1.0, -4.0 ]
       UpperBounds: [ 1.0, 4.0 ]
       NBins: [ 200, 200 ]
+
+# Pid testing
+##################
+
+    - Name: Pid1
+      Variable: Pid1
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: Pid2
+      Variable: Pid2
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: Pid3
+      Variable: Pid3
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: PidMCT1
+      Variable: *MC_Pid1
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: PidMCT2
+      Variable: *MC_Pid2
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: PidMCT3
+      Variable: *MC_Pid3
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: KaonPid
+      Variable: KaonPid
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: PionPid
+      Variable: PionPid
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: KaonPidMct
+      Variable: KaonPidMct
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+    - Name: PionPidMct
+      Variable: PionPidMct
+      LowerBound: -2.0
+      UpperBound: 6.0
+      NBins:  8
+
+
+
 
 
 OutputTree:
