@@ -959,42 +959,6 @@ Plots:
 # Pid testing
 ##################
 
-    - Name: Pid1
-      Variable: Pid1
-      LowerBound: -2.0
-      UpperBound: 6.0
-      NBins:  8
-
-    - Name: Pid2
-      Variable: Pid2
-      LowerBound: -2.0
-      UpperBound: 6.0
-      NBins:  8
-
-    - Name: Pid3
-      Variable: Pid3
-      LowerBound: -2.0
-      UpperBound: 6.0
-      NBins:  8
-
-    - Name: PidMCT1
-      Variable: *MC_Pid1
-      LowerBound: -2.0
-      UpperBound: 6.0
-      NBins:  8
-
-    - Name: PidMCT2
-      Variable: *MC_Pid2
-      LowerBound: -2.0
-      UpperBound: 6.0
-      NBins:  8
-
-    - Name: PidMCT3
-      Variable: *MC_Pid3
-      LowerBound: -2.0
-      UpperBound: 6.0
-      NBins:  8
-
     - Name: KaonPid
       Variable: KaonPid
       LowerBound: -2.0
