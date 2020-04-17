@@ -961,27 +961,27 @@ Plots:
 
     - Name: KaonPid
       Variable: KaonPid
-      LowerBound: -2.0
+      LowerBound: -4.0
       UpperBound: 6.0
-      NBins:  8
+      NBins:  10
 
     - Name: PionPid
       Variable: PionPid
-      LowerBound: -2.0
+      LowerBound: -4.0
       UpperBound: 6.0
-      NBins:  8
+      NBins:  10
 
     - Name: KaonPidMct
       Variable: KaonPidMct
-      LowerBound: -2.0
+      LowerBound: -4.0
       UpperBound: 6.0
-      NBins:  8
+      NBins:  10
 
     - Name: PionPidMct
       Variable: PionPidMct
-      LowerBound: -2.0
+      LowerBound: -4.0
       UpperBound: 6.0
-      NBins:  8
+      NBins:  10
 
 
 
