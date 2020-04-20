@@ -88,7 +88,7 @@ Constants:
     RICHMomElectronMax: &RICHMomElectronMax 0.0
     RICHMomMuonMin: &RICHMomMuonMin 0.0
     RICHMomMuonMax: &RICHMomMuonMax 0.0
-    RICHPidRatioCut:  &RICHPidRatioCut 1.15
+    RICHPidRatioCut:  &RICHPidRatioCut 1
     RICHRadiusMin:  &RICHRadiusMin 5
     RICHRadiusMax:  &RICHRadiusMax 10000
     RICHAngleMin:  &RICHAngleMin 0
