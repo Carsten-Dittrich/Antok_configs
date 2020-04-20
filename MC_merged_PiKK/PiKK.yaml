@@ -88,7 +88,7 @@ Constants:
     RICHMomElectronMax: &RICHMomElectronMax 0.0
     RICHMomMuonMin: &RICHMomMuonMin 0.0
     RICHMomMuonMax: &RICHMomMuonMax 0.0
-    RICHPidRatioCut:  &RICHPidRatioCut 1
+    RICHPidRatioCut:  &RICHPidRatioCut 1.15
     RICHRadiusMin:  &RICHRadiusMin 5
     RICHRadiusMax:  &RICHRadiusMax 10000
     RICHAngleMin:  &RICHAngleMin 0
@@ -706,6 +706,27 @@ Cuts:
           UpperBound: 3.5
           Variable: *XStateMass
 
+# To determine purity
+    - &KaonPidMctCorrect
+      ShortName: KaonCorrect
+      LongName: "Kaon Pid is correct"
+      Abbreviation: KCor
+      Cut:
+          Name: Equality
+          Type: ==
+          Value: 1
+          Variable: KaonPidMct
+          
+    - &PionPidMctCorrect
+      ShortName: PionCorrect
+      LongName: "Pion Pid is correct"
+      Abbreviation: PCor
+      Cut:
+          Name: Equality
+          Type: ==
+          Value: 0
+          Variable: PionPidMct
+
 #############################################################################################
 # CUT TRAINS
 #############################################################################################
@@ -725,7 +746,24 @@ CutTrains:
         - *ExclusivityCut
 #        - *TPrimeCut
 #        - *PiKKMassCut
-      Pertinent: Yes
+      Pertinent: No
+      
+    - &PidTrain 
+      Name: PidTrain
+      Cuts: &CutsPidTrain
+        - *IsSelectedCut
+        - *BeamTrackTimeCut
+        - *TriggerMaskCut
+        - *CutOnePV
+        - *VertexZCut
+        - *VertexRCut
+        - *SoftParticlePIDCut
+        - *nRPDTracksCut
+        - *RPDPlanarityCut
+        - *ExclusivityCut
+        - *KaonPidMctCorrect
+        - *PionPidMctCorrect
+      Pertinent: No
 
 
 #############################################################################################
