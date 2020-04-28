@@ -724,6 +724,14 @@ Cuts:
           Value: 0
           Variable: PionPidMct
 
+# NoCutTrain
+    - &CutNo                                                                                                                                                                                
+      ShortName: NoCut
+      LongName: No Cut 
+      Abbreviation: nCut
+      Cut:
+          Name: NoCut
+
 #############################################################################################
 # CUT TRAINS
 #############################################################################################
@@ -747,6 +755,11 @@ CutTrains:
 #        - *PiKKMassCut
       Pertinent: Yes
 
+    - &NoCutTrain 
+      Name: NoCutTrain
+      Cuts:
+        - *CutNo
+      Pertinent: Yes
 
 #############################################################################################
 # Options
@@ -786,13 +799,6 @@ Plots:
       LowerBounds: [ -4.0, -4.0 ]
       UpperBounds: [ 4.0, 4.0 ]
       NBins: [ 800, 800 ]
-
-    - Name: Momentum Plane XY
-      Variables: [ *MomX, *MomY ]
-      Indices: *allParticles
-      LowerBounds: [ -5, -5 ]
-      UpperBounds: [ 5, 5 ]
-      NBins: [ 200, 200 ]
 
     - Name: Beam Energy
       Variable: *BeamE
@@ -834,18 +840,6 @@ Plots:
       LowerBound: 0.0
       UpperBound: 200.0
       NBins:  500
-
-    - Name: Momentum Plane of PiNeg versus KNeg
-      Variables: [ *KaonNegMomAbs, *PionMomAbs ]
-      LowerBounds: [ 0.0, 0.0 ]
-      UpperBounds: [ 200.0, 200.0 ]
-      NBins: [ 500, 500 ]
-
-    - Name: Momentum Plane of KPos versus KNeg
-      Variables: [ *KaonNegMomAbs, *KaonPosMomAbs ]
-      LowerBounds: [ 0.0, 0.0 ]
-      UpperBounds: [ 200.0, 200.0 ]
-      NBins: [ 500, 500 ]
       
 #####################################
 # kinematics
@@ -883,26 +877,6 @@ Plots:
       LowerBound: 0.0
       UpperBound: 4.0
       NBins:  800
-
-# Invariant mass spectra of the 3 body mass against two-body subsystem
-    - Name: KPosPiStateMass versus XStateMass
-      Variables: [ *XStateMass, *KPosPiStateMass ]
-      LowerBounds: [ 1.0, 0.5 ]
-      UpperBounds: [ 3.0, 3.0 ]
-      NBins: [ 200, 250 ]
-
-    - Name: KNegKPosStateMass versus XStateMass
-      Variables: [ *XStateMass, *KNegKPosStateMass ]
-      LowerBounds: [ 1.0, 0.5 ]
-      UpperBounds: [ 3.0, 3.0 ]
-      NBins: [ 200, 250 ]
-
-# T Prime against Three body mass
-    - Name: tPrime versus XStateMass
-      Variables: [ *tPrime, *XStateMass ]
-      LowerBounds: [ 0.0, 0.0 ]
-      UpperBounds: [ 3.0, 7.0 ]
-      NBins: [ 300, 280 ]
 
 # Dalitz Plots
     - Name: Dalitz KNegPi versus KPosPi
@@ -948,63 +922,6 @@ Plots:
       LowerBound: 0.0
       UpperBound: 3.0
       NBins:  3000
-
-# Gottfried Jackson
-
-    - Name: GJ_phi_KK versus GJ_cost_KK
-      Variables: [ *GJ_cost_KK, *GJ_phi_KK ]
-      LowerBounds: [ -1.0, -4.0 ]
-      UpperBounds: [ 1.0, 4.0 ]
-      NBins: [ 200, 200 ]
-
-    - Name: HF_phi_KK versus HF_cost_KK
-      Variables: [ *HF_cost_KK, *HF_phi_KK ]
-      LowerBounds: [ -1.0, -4.0 ]
-      UpperBounds: [ 1.0, 4.0 ]
-      NBins: [ 200, 200 ]
-
-
-    - Name: GJ_phi_PiK versus GJ_cost_PiK
-      Variables: [ *GJ_cost_PiK, *GJ_phi_PiK ]
-      LowerBounds: [ -1.0, -4.0 ]
-      UpperBounds: [ 1.0, 4.0 ]
-      NBins: [ 200, 200 ]
-
-    - Name: HF_phi_PiK versus HF_cost_PiK
-      Variables: [ *HF_cost_PiK, *HF_phi_PiK ]
-      LowerBounds: [ -1.0, -4.0 ]
-      UpperBounds: [ 1.0, 4.0 ]
-      NBins: [ 200, 200 ]
-
-# Pid testing
-##################
-
-    - Name: KaonPid
-      Variable: KaonPid
-      LowerBound: -4.0
-      UpperBound: 6.0
-      NBins:  10
-
-    - Name: PionPid
-      Variable: PionPid
-      LowerBound: -4.0
-      UpperBound: 6.0
-      NBins:  10
-
-    - Name: KaonPidMct
-      Variable: KaonPidMct
-      LowerBound: -4.0
-      UpperBound: 6.0
-      NBins:  10
-
-    - Name: PionPidMct
-      Variable: PionPidMct
-      LowerBound: -4.0
-      UpperBound: 6.0
-      NBins:  10
-
-
-
 
 
 OutputTree:
