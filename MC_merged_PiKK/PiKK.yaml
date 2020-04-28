@@ -94,9 +94,6 @@ Constants:
     RICHAngleMin:  &RICHAngleMin 0
     RICHAngleMax:  &RICHAngleMax 0.25
 
-    PidMCT1:  &PidMCT1 0
-    PidMCT2:  &PidMCT2 0
-
 # CEDAR Parameter
     CEDARParameter:
         CEDARThresholdKaon: &CEDARThresholdKaon 4.0
@@ -744,26 +741,11 @@ CutTrains:
         - *nRPDTracksCut
         - *RPDPlanarityCut
         - *ExclusivityCut
-#        - *TPrimeCut
-#        - *PiKKMassCut
-      Pertinent: No
-      
-    - &PidTrain 
-      Name: PidTrain
-      Cuts: &CutsPidTrain
-        - *IsSelectedCut
-        - *BeamTrackTimeCut
-        - *TriggerMaskCut
-        - *CutOnePV
-        - *VertexZCut
-        - *VertexRCut
-        - *SoftParticlePIDCut
-        - *nRPDTracksCut
-        - *RPDPlanarityCut
-        - *ExclusivityCut
         - *KaonPidMctCorrect
         - *PionPidMctCorrect
-      Pertinent: No
+#        - *TPrimeCut
+#        - *PiKKMassCut
+      Pertinent: Yes
 
 
 #############################################################################################
